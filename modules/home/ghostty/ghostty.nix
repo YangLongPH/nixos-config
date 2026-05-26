@@ -6,20 +6,14 @@
 
     settings = {
       ##### Font #####
-      font-family = [
-        "Maple Mono"
-        # "DejaVu Sans"
-      ];
+      font-family = "JetBrainsMono Nerd Font";
       font-size = if (host == "p14s") then 20 else 16;
-      font-feature = [
-        "calt"
-        "cv66"
-        "ss05"
-      ];
 
       ##### Theme #####
-      theme = "gruvbox";
-      background-opacity = 0.5;
+      theme = "Monokai Pro";
+      background-opacity = 0.9;
+      background-blur-radius = 20;
+      cursor-style = "block";
       adjust-cursor-thickness = 1;
 
       selection-clear-on-copy = true;

@@ -7,6 +7,27 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
+    oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "git"
+        "mvn"
+        "npm"
+        "podman"
+        "tmux"
+        "wd"
+        "command-not-found"
+        "fancy-ctrl-z"
+        "argocd"
+        "docker"
+        "docker-compose"
+        "gh"
+        "sudo"
+        "kubectl"
+        "terraform"
+      ];
+    };
+
     history = {
       share = true;
       ignoreSpace = true;
