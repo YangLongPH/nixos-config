@@ -21,5 +21,21 @@
     ## Python
     python3
     python312Packages.ipython
+
+    ## Node.js
+    nodejs_22
+
+    ## Rust
+    rustc
+    cargo
+
+    ## Java
+    temurin-bin-21
+
+    ## DevOps
+    terraform
+    lazydocker
+    tmux
+    glab                               # GitLab CLI
   ];
 }

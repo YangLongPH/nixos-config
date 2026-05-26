@@ -1,12 +1,17 @@
 { pkgs, username, ... }:
+let
+  identity = {
+    name  = "YangLong";
+    email = "yanglong.ph@gmail.com";
+  };
+in
 {
   programs.git = {
     enable = true;
 
     settings = {
       user = {
-        name = "Frost-Phoenix";
-        email = "67cyril6767@gmail.com";
+        inherit (identity) name email;
       };
 
       init.defaultBranch = "main";

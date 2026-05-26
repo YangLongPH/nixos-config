@@ -9,6 +9,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    claude-code.url = "github:sadjow/claude-code-nix";
+
     nix-gaming.url = "github:fufexan/nix-gaming";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
@@ -73,6 +75,15 @@
           specialArgs = {
             host = "vm";
             inherit self inputs username;
+          };
+        };
+        yanglong-pc = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [ ./hosts/yanglong-pc ];
+          specialArgs = {
+            host = "yanglong-pc";
+            username = "yanglong";
+            inherit self inputs;
           };
         };
       };

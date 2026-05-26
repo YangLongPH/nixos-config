@@ -13,7 +13,7 @@
     spice
     spice-gtk
     spice-protocol
-    virtio-win
+    # virtio-win
     win-spice
     adwaita-icon-theme
   ];

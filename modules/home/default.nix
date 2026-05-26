@@ -1,17 +1,18 @@
 { ... }:
 {
   imports = [
-    ./aseprite/aseprite.nix           # pixel art editor
-    ./audacious/audacious.nix         # music player
+    # ./aseprite/aseprite.nix           # pixel art editor
+    # ./audacious/audacious.nix         # music player
     ./bat.nix                         # better cat command
+    ./claude.nix                      # claude code AI assistant
     ./browser.nix                     # firefox based browser
-    ./btop.nix                        # resouces monitor 
-    ./cava.nix                        # audio visualizer
+    ./btop.nix                        # resouces monitor
+    # ./cava.nix                        # audio visualizer
     ./direnv.nix
-    ./discord.nix                     # discord
+    # ./discord.nix                     # discord
     ./fastfetch/fastfetch.nix         # fetch tool
     ./fzf.nix                         # fuzzy finder
-    ./gaming.nix                      # packages related to gaming
+    # ./gaming.nix                      # packages related to gaming
     ./ghostty/ghostty.nix             # terminal
     ./git.nix                         # version control
     ./gnome.nix                       # gnome apps
@@ -19,18 +20,18 @@
     ./hyprland                        # window manager
     ./kitty.nix                       # terminal
     ./lazygit.nix
-    ./micro.nix                       # nano replacement
+    # ./micro.nix                       # nano replacement
     ./nemo.nix                        # file manager
     ./nvim.nix                        # neovim editor
-    ./obsidian.nix
+    # ./obsidian.nix
     ./p10k/p10k.nix
     ./packages                        # other packages
-    ./pomo/pomo.nix                   # TUI Pomodoro timer
-    ./retroarch.nix  
+    # ./pomo/pomo.nix                   # TUI Pomodoro timer
+    # ./retroarch.nix
     ./rofi/rofi.nix                   # launcher
     ./../../scripts/scripts.nix       # personal scripts
     ./ssh.nix                         # ssh config
-    ./spicetify.nix                   # spotify client
+    # ./spicetify.nix                   # spotify client
     ./superfile/superfile.nix         # terminal file manager
     ./swaylock.nix                    # lock screen
     ./swayosd.nix                     # brightness / volume wiget

@@ -2,6 +2,10 @@
 {
   programs.zsh = {
     shellAliases = {
+      # Editor
+      v  = "nvim";
+      vi = "vim";
+
       # Utils
       c = "clear";
       cd = "z";
