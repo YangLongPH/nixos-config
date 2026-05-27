@@ -40,6 +40,7 @@
     ./swaync/swaync.nix               # notification deamon
     ./vscodium                        # vscode fork
     ./waybar                          # status bar
+    ./wallpaper-rotate.nix            # auto random wallpaper timer
     ./waypaper.nix                    # GUI wallpaper picker
     ./xdg-mimes.nix                   # xdg config
     ./zsh                             # shell
