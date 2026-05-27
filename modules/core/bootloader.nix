@@ -7,7 +7,7 @@
       systemd-boot.configurationLimit = 10;
     };
 
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_7_0;
     kernelModules = [ "hid-nintendo" ];
     supportedFilesystems = [ "ntfs" ];
   };

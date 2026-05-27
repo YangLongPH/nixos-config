@@ -86,6 +86,15 @@
             inherit self inputs;
           };
         };
+	PC-170 = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [ ./hosts/PC-170 ];
+          specialArgs = {
+            host = "PC-170";
+            username = "yanglong";
+            inherit self inputs;
+          };
+        };
       };
     };
 }
