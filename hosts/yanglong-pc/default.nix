@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -32,5 +32,11 @@
   environment.sessionVariables = {
     GBM_BACKEND = "nvidia-drm";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+  };
+
+  home-manager.users.${username} = {
+    wayland.windowManager.hyprland.settings.monitor = [
+      "HDMI-A-1,3840x2160@60,auto,1.5"
+    ];
   };
 }
