@@ -41,7 +41,7 @@ in
       "pulseaudio"
       "network"
       "battery"
-      "hyprland/language"
+      "custom/fcitx5"
       "custom/notification"
       "custom/power-menu"
     ];
@@ -134,13 +134,14 @@ in
       tooltip = true;
       tooltip-format = "{time}";
     };
-    "hyprland/language" = {
+    "custom/fcitx5" = {
+      exec = "fcitx5-remote -n | sed 's/keyboard-us/EN/;s/unikey/VI/'";
+      interval = "once";
+      signal = 1;
+      format = "⌨ {}";
+      on-click = "fcitx5-remote -t && pkill -RTMIN+1 waybar";
       tooltip = true;
-      tooltip-format = "Keyboard layout";
-      format = "<span foreground='#FABD2F'> </span> {}";
-      format-fr = "FR";
-      format-en = "US";
-      on-click = "hyprctl switchxkblayout at-translated-set-2-keyboard next";
+      tooltip-format = "Toggle input method (VI/EN)";
     };
     "custom/launcher" = {
       format = "";

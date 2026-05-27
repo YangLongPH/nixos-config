@@ -5,14 +5,14 @@
   xdg.configFile."waypaper/config.ini".text = ''
     [Settings]
     language = en
-    folder = ~/Pictures/wallpapers/others
+    folder = ~/Pictures/wallpapers
     monitors = All
-    wallpaper = ~/Pictures/wallpapers/others/nixos.png
+    wallpaper = ~/Pictures/wallpapers/nixos.png
     backend = awww
     fill = fill
     sort = name
     color = #ffffff
-    subfolders = False
+    subfolders = True
     show_hidden = False
     show_gifs_only = False
     post_command = pkill .waypaper-wrapp

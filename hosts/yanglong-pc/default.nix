@@ -36,7 +36,7 @@
 
   home-manager.users.${username} = {
     wayland.windowManager.hyprland.settings.monitor = [
-      "HDMI-A-1,3840x2160@60,auto,1.5"
+      "HDMI-A-1,3840x2160@60,auto,1.67"
     ];
   };
 }

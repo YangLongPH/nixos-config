@@ -25,6 +25,9 @@
     XDG_SESSION_DESKTOP = "Hyprland";
     SDL_VIDEODRIVER = "wayland";
     CLUTTER_BACKEND = "wayland";
+    QT_IM_MODULE = "fcitx";
+    XMODIFIERS = "@im=fcitx";
+    SDL_IM_MODULE = "fcitx";
     GTK_THEME = "Colloid-Green-Dark-Gruvbox";
     GRIMBLAST_HIDE_CURSOR = 0;
   };

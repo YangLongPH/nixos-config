@@ -7,6 +7,8 @@
 
     "hyprlock"
 
+    "fcitx5 -d &"
+    "sleep 3 && pkill -RTMIN+1 waybar &"
     "nm-applet &"
     "poweralertd &"
     "wl-clip-persist --clipboard both &"

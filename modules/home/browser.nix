@@ -9,6 +9,6 @@
 
   home.packages = with pkgs; [
     brave
-    google-chrome
+    (google-chrome.override { commandLineArgs = "--password-store=basic"; })
   ];
 }

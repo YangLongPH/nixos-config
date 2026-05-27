@@ -87,8 +87,12 @@ in
       color: ${text_color};
     }
 
-    #pulseaudio, #language, #custom-notification {
+    #pulseaudio, #language, #custom-notification, #custom-fcitx5 {
       margin-left: 15px;
+    }
+
+    #custom-fcitx5 {
+      color: ${yellow};
     }
 
     #custom-power-menu {

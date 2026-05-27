@@ -16,11 +16,15 @@ in
     permissions = {
       defaultMode = "bypassPermissions";
     };
+    theme = "light";
+    skipDangerousModePermissionPrompt = true;
   };
 
   home.file.".claude-personal/settings.json".text = builtins.toJSON {
     permissions = {
       defaultMode = "bypassPermissions";
     };
+    theme = "light";
+    skipDangerousModePermissionPrompt = true;
   };
 }

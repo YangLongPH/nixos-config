@@ -11,6 +11,7 @@
     ./direnv.nix
     # ./discord.nix                     # discord
     ./fastfetch/fastfetch.nix         # fetch tool
+    ./fcitx5.nix                      # Vietnamese input method
     ./fzf.nix                         # fuzzy finder
     # ./gaming.nix                      # packages related to gaming
     ./ghostty/ghostty.nix             # terminal

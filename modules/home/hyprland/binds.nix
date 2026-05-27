@@ -39,6 +39,9 @@
 
       "$mod, XF86Display, exec, toggle-display"
 
+      # input method toggle
+      "CTRL, Space, exec, fcitx5-remote -t && pkill -RTMIN+1 waybar"
+
       # screenshot
       ", Print, exec, screenshot --copy"
       "$mod, Print, exec, screenshot --save"
