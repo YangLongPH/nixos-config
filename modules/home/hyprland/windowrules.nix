@@ -24,6 +24,7 @@
       "match:title ^(Picture-in-Picture)$, pin on"
       "match:title ^(Picture-in-Picture)$, float on"
 
+      "match:class ^(zen-beta)$, opacity 0.95 0.9"
       "match:class ^(zen-beta)$, workspace 1"
       "match:class ^(codium)$, workspace 3"
       "match:class ^(Gimp-2.10)$, workspace 4"
