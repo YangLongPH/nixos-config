@@ -30,6 +30,11 @@
     };
     superfile.url = "github:yorukot/superfile";
     zen-browser.url = "github:0xc000022070/zen-browser-flake/beta";
+
+    astronvim-template = {
+      url = "github:YangLongPH/astronvim-template";
+      flake = false;
+    };
   };
 
   outputs =

@@ -28,6 +28,7 @@
     ./packages                        # other packages
     # ./pomo/pomo.nix                   # TUI Pomodoro timer
     # ./retroarch.nix
+    ./rclone.nix                      # Google Drive mount + wallpaper sync
     ./rofi/rofi.nix                   # launcher
     ./../../scripts/scripts.nix       # personal scripts
     ./ssh.nix                         # ssh config

@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "astronvim-template": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778138194,
+        "narHash": "sha256-M/GU2zXJTGVt4FPeqC8i0K5XrUoPXcPtk0DNcJEgVVU=",
+        "owner": "YangLongPH",
+        "repo": "astronvim-template",
+        "rev": "5e1943339c7dc8dc952c9d62dcecd9855120deb0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "YangLongPH",
+        "repo": "astronvim-template",
+        "type": "github"
+      }
+    },
     "claude-code": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -385,6 +401,7 @@
     },
     "root": {
       "inputs": {
+        "astronvim-template": "astronvim-template",
         "claude-code": "claude-code",
         "home-manager": "home-manager",
         "maple-mono": "maple-mono",

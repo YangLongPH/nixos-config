@@ -4,7 +4,7 @@
 
   programs.zen-browser = {
     enable = true;
-    setAsDefaultBrowser = true;
+    setAsDefaultBrowser = false;
   };
 
   home.packages = with pkgs; [

@@ -21,7 +21,7 @@ let
 in
 {
   programs.waybar.settings.mainBar = with custom; {
-    position = "bottom";
+    position = "top";
     layer = "top";
     height = 28;
     margin-top = 0;
@@ -73,13 +73,6 @@ in
         "9" = "IX";
         "10" = "X";
         sort-by-number = true;
-      };
-      persistent-workspaces = {
-        "1" = [ ];
-        "2" = [ ];
-        "3" = [ ];
-        "4" = [ ];
-        "5" = [ ];
       };
     };
     cpu = {

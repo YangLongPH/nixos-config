@@ -12,10 +12,15 @@ in
     claude-p = "CLAUDE_CONFIG_DIR=~/.claude-personal ${claude-pkg}/bin/claude";
   };
 
-  # Personal Claude profile with bypassPermissions mode enabled by default
+  home.file.".claude-work/settings.json".text = builtins.toJSON {
+    permissions = {
+      defaultMode = "bypassPermissions";
+    };
+  };
+
   home.file.".claude-personal/settings.json".text = builtins.toJSON {
     permissions = {
-      mode = "bypassPermissions";
+      defaultMode = "bypassPermissions";
     };
   };
 }

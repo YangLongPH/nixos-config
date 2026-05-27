@@ -2,6 +2,7 @@
 with lib;
 let
   defaultApps = {
+    browser = [ "google-chrome.desktop" ];
     text = [ "org.gnome.TextEditor.desktop" ];
     image = [ "imv-dir.desktop" ];
     audio = [ "mpv.desktop" ];
@@ -68,6 +69,12 @@ let
       "application/*tar"
     ];
     discord = [ "x-scheme-handler/discord" ];
+    browser = [
+      "text/html"
+      "x-scheme-handler/http"
+      "x-scheme-handler/https"
+      "x-scheme-handler/ftp"
+    ];
   };
 
   associations =

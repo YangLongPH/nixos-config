@@ -33,7 +33,7 @@
       bell-features = "no-attention,no-audio,no-system,no-title,no-border";
 
       gtk-single-instance = false;
-      gtk-tabs-location = "bottom";
+      gtk-tabs-location = "top";
       gtk-wide-tabs = false;
       gtk-custom-css = "styles/tabs.css";
 
@@ -53,6 +53,8 @@
 
         "ctrl+shift+t=new_tab"
         "ctrl+shift+w=close_tab:this"
+        "ctrl+tab=next_tab"
+        "ctrl+shift+tab=previous_tab"
         "alt+digit_1=goto_tab:1"
         "alt+digit_2=goto_tab:2"
         "alt+digit_3=goto_tab:3"
