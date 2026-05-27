@@ -50,38 +50,6 @@
     in
     {
       nixosConfigurations = {
-        desktop = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [ ./hosts/desktop ];
-          specialArgs = {
-            host = "desktop";
-            inherit self inputs username;
-          };
-        };
-        laptop = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [ ./hosts/laptop ];
-          specialArgs = {
-            host = "laptop";
-            inherit self inputs username;
-          };
-        };
-        p14s = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [ ./hosts/p14s ];
-          specialArgs = {
-            host = "p14s";
-            inherit self inputs username;
-          };
-        };
-        vm = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [ ./hosts/vm ];
-          specialArgs = {
-            host = "vm";
-            inherit self inputs username;
-          };
-        };
         yanglong-pc = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [ ./hosts/yanglong-pc ];

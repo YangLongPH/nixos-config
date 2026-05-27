@@ -21,6 +21,7 @@
     interface wlp22s0f0u5i2
     metric 100
   '';
+  networking.networkmanager.wifi.macAddress = "permanent";
 
   # Overide network metric
   # systemd.network.networks = {
