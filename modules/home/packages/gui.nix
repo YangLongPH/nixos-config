@@ -1,5 +1,10 @@
 { pkgs, ... }:
 {
+  home.file.".config/autostart/remmina-applet.desktop".text = ''
+    [Desktop Entry]
+    Hidden=true
+  '';
+
   home.packages = with pkgs; [
     ## Multimedia
     amberol # music player

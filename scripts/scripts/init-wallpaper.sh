@@ -11,4 +11,4 @@ if ! pgrep -x awww-daemon > /dev/null; then
 fi
 
 # Set wallpaper
-awww img -t none ~/Pictures/wallpapers/wallpaper &
+awww img -t none ~/Pictures/wallpaper &

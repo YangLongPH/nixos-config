@@ -5,7 +5,7 @@
     "dbus-update-activation-environment --all --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
     "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
 
-    "hyprlock"
+    "lock"
 
     "fcitx5 -d &"
     "sleep 3 && pkill -RTMIN+1 waybar &"

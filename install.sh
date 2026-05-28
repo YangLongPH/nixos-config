@@ -170,7 +170,7 @@ sed -i 's/"67cyril6767@gmail.com"/""/g' modules/home/git.nix
 
 ## Create common dirrectories
 echo -e "${INFO}Preparing the environment"
-for dir in ~/Music ~/Documents ~/Pictures/wallpapers/others; do
+for dir in ~/Music ~/Documents ~/Pictures/wallpapers/others ~/Pictures/lock-screen; do
     echo -e "${INFO}Creating folder: ${MAGENTA}${dir}${RESET}"
     mkdir -p "$dir"
 done
@@ -179,7 +179,7 @@ done
 echo -e "${INFO}Copying wallpapers..."
 if cp -r wallpapers/otherWallpaper/gruvbox/* ~/Pictures/wallpapers/others/ &&
     cp -r wallpapers/otherWallpaper/nixos/* ~/Pictures/wallpapers/others/ &&
-    ln -sf $PWD/wallpapers/wallpaper.png ~/Pictures/wallpapers/wallpaper; then
+    ln -sf $PWD/wallpapers/wallpaper.png ~/Pictures/wallpaper; then
     echo -e "${OK}Wallpapers copied successfully."
 else
     echo -e "${WARN}Some wallpapers could not be copied!"

@@ -1,4 +1,4 @@
-{ host, ... }:
+{ host, config, ... }:
 {
   programs.hyprlock = {
     enable = true;
@@ -12,7 +12,7 @@
 
       background = [
         {
-          path = "${../../../wallpapers/otherWallpaper/937839.jpg}";
+          path = "${config.home.homeDirectory}/Pictures/lock-screen/current";
 
           color = "rgba(29, 32, 33, 255)";
           blur_passes = 2;

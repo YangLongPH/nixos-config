@@ -3,7 +3,7 @@
 wallpaper_path="$HOME/Pictures/wallpapers"
 wallpapers_folder="$HOME/Pictures/wallpapers"
 
-current_wallpaper=$(readlink -f "$wallpaper_path/wallpaper" 2> /dev/null)
+current_wallpaper=$(readlink -f "$HOME/Pictures/wallpaper" 2> /dev/null)
 echo "current: $current_wallpaper"
 
 mapfile -t wallpaper_list < <(find "$wallpapers_folder" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" \) ! -name "wallpaper")
@@ -19,5 +19,5 @@ while true; do
 done
 
 echo "selected: $wallpaper_file"
-ln -sf "$wallpaper_file" "$wallpaper_path/wallpaper"
-wall-change "$wallpaper_path/wallpaper"
+ln -sf "$wallpaper_file" "$HOME/Pictures/wallpaper"
+wall-change "$HOME/Pictures/wallpaper"
