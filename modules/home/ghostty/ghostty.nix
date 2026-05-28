@@ -11,7 +11,7 @@
 
       ##### Theme #####
       theme = "Monokai Pro";
-      background-opacity = 0.9;
+      background-opacity = 0.8;
       background-blur-radius = 20;
       cursor-style = "block";
       adjust-cursor-thickness = 1;

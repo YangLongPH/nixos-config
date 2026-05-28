@@ -21,6 +21,9 @@
     interface wlp22s0f0u5i2
     metric 100
   '';
+  networking.hosts = {
+    "10.10.1.249" = [ "gitlab.goline.vn" ];
+  };
   networking.networkmanager.wifi.macAddress = "permanent";
   # Disable WiFi power management to prevent periodic disconnection on rtl8821cu
   networking.networkmanager.wifi.powersave = false;
