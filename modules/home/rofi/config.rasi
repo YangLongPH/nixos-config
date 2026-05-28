@@ -8,13 +8,13 @@ configuration{
     terminal: "ghostty";
     drun-display-format: "{icon} {name}";
     location: 0;
-    disable-history: true;
+    disable-history: false;
     hide-scrollbar: true;
     display-drun: " Apps ";
     display-run: " Run ";
     display-window: " Window ";
     sidebar-mode: true;
-    sorting-method: "fzf";
+    sorting-method: "normal";
 }
 
 @theme "theme"

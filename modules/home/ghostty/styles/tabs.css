@@ -17,11 +17,20 @@ tabbar tabbox tab {
     color: #fbf1c7;
 }
 
-tabbar tabbox tab:selected {
-    background-color: #282828;
-    color: #fbf1c7;
+tabbar tabbox tab:checked {
+    background-color: red;
+    color: white;
+    font-weight: normal;
+    text-shadow: none;
 }
 
 tabbar tabbox tab label {
     font-size: 18px;
+    font-weight: normal;
+    text-shadow: none;
+}
+
+tabbar tabbox tab:checked label {
+    font-weight: normal;
+    text-shadow: none;
 }

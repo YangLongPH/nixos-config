@@ -22,6 +22,16 @@
     metric 100
   '';
   networking.networkmanager.wifi.macAddress = "permanent";
+  # Disable WiFi power management to prevent periodic disconnection on rtl8821cu
+  networking.networkmanager.wifi.powersave = false;
+
+  # Disable USB autosuspend for the TP-Link Archer T2U Nano (RTL8821CU)
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="2357", ATTR{idProduct}=="0120", TEST=="power/control", ATTR{power/control}="on"
+  '';
+
+  # Prevent kernel from suspending the USB WiFi adapter
+  boot.kernelParams = [ "usbcore.autosuspend=-1" ];
 
   # Overide network metric
   # systemd.network.networks = {

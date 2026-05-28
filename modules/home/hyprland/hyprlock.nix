@@ -12,11 +12,24 @@
 
       background = [
         {
-          path = "${../../../wallpapers/otherWallpaper/gruvbox/forest_road.jpg}";
+          path = "${../../../wallpapers/otherWallpaper/937839.jpg}";
 
           color = "rgba(29, 32, 33, 255)";
           blur_passes = 2;
           vibrancy_darkness = 0.0;
+        }
+      ];
+
+      image = [
+        # User avatar
+        {
+          path = "${../../../wallpapers/otherWallpaper/user_icon.jpg}";
+          size = 80;
+          rounding = -1;
+
+          position = "0, 370";
+          halign = "center";
+          valign = "bottom";
         }
       ];
 

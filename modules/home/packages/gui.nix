@@ -20,6 +20,8 @@
     gnome-disk-utility
     popsicle
     mission-center # GUI resources monitor
+    freerdp
+    remmina
     zenity
 
     ## Level editor
