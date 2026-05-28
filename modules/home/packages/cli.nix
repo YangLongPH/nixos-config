@@ -76,6 +76,7 @@
     poweralertd
     socat
     udiskie                           # Automounter for removable media
+    unrar
     unzip
     wget
     wl-clipboard                      # clipboard utils for wayland (wl-copy, wl-paste)

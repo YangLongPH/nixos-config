@@ -3,7 +3,7 @@
   programs.kitty = {
     enable = true;
 
-    themeFile = "gruvbox-dark-hard";
+    themeFile = "Monokai";
 
     font = {
       name = "Maple Mono";
@@ -26,6 +26,7 @@
       window_padding_width = if (host == "laptop") then 5 else 10;
 
       ## Tabs
+      tab_bar_edge = "top";
       tab_title_template = "{index}";
       active_tab_font_style = "normal";
       inactive_tab_font_style = "normal";
@@ -39,6 +40,7 @@
 
     keybindings = {
       ## Tabs
+      "ctrl+shift+t" = "launch --cwd=current --type=tab";
       "alt+1" = "goto_tab 1";
       "alt+2" = "goto_tab 2";
       "alt+3" = "goto_tab 3";

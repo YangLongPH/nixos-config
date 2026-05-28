@@ -1,4 +1,4 @@
-{ host, ... }:
+{ host, config, ... }:
 {
   programs.ghostty = {
     enable = true;
@@ -35,7 +35,8 @@
       gtk-single-instance = false;
       gtk-tabs-location = "top";
       gtk-wide-tabs = false;
-      gtk-custom-css = "styles/tabs.css";
+      gtk-toolbar-style = "flat";
+      gtk-custom-css = "${config.xdg.configHome}/ghostty/styles/tabs.css";
 
       auto-update = "off";
 
@@ -47,6 +48,7 @@
       keybind = [
         "clear"
 
+        "ctrl+shift+r=reload_config"
         "ctrl+shift+a=select_all"
         "ctrl+shift+c=copy_to_clipboard"
         "ctrl+shift+v=paste_from_clipboard"
