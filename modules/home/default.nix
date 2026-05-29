@@ -30,6 +30,7 @@
     # ./pomo/pomo.nix                   # TUI Pomodoro timer
     # ./retroarch.nix
     ./rclone.nix                      # Google Drive mount + wallpaper sync
+    ./watson.nix                      # time tracker + Google Drive sync
     ./rofi/rofi.nix                   # launcher
     ./../../scripts/scripts.nix       # personal scripts
     ./ssh.nix                         # ssh config

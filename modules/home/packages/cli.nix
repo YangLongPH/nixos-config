@@ -32,6 +32,9 @@
     woomer
     yt-dlp-light
 
+    ## Time tracking
+    watson                            # CLI time tracker
+
     ## TUI
     epy                               # ebook reader
     gtt                               # google translate TUI
