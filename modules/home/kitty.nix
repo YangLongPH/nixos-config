@@ -46,6 +46,8 @@
       "alt+3" = "goto_tab 3";
       "alt+4" = "goto_tab 4";
 
+      "ctrl+shift+k" = "clear_terminal reset active";
+
       ## Unbind
       "ctrl+shift+left" = "no_op";
       "ctrl+shift+right" = "no_op";

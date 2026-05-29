@@ -69,6 +69,7 @@
 
         "shift+page_down=scroll_page_down"
         "shift+page_up=scroll_page_up"
+        "ctrl+shift+k=reset_terminal"
       ];
     };
 
