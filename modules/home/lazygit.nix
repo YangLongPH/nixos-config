@@ -5,6 +5,7 @@
 
     settings = {
       gui.border = "single";
+      gui.showFileTree = false;
     };
   };
 }

@@ -47,7 +47,6 @@ in
   home.packages = with pkgs; [
     gh
     serie
-    diffnav
   ];
 
   xdg.configFile."git/.gitignore".text = ''
@@ -61,7 +60,7 @@ in
 
     gs = "git status";
     gcl = "git clone";
-    gd = "git diff | diffnav";
+    gd = "git diff --word-diff=color --word-diff-regex=.";
 
     ga = "git add";
     gaa = "git add --all";

@@ -47,6 +47,7 @@
       "alt+4" = "goto_tab 4";
 
       "ctrl+shift+k" = "clear_terminal reset active";
+      "ctrl+shift+a" = "select_all";
 
       ## Unbind
       "ctrl+shift+left" = "no_op";
