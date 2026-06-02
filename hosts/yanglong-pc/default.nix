@@ -1,5 +1,33 @@
 { config, pkgs, username, ... }:
 {
+  nix.settings = {
+    substituters = [ "https://cuda-maintainers.cachix.org" ];
+    trusted-public-keys = [ "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E=" ];
+  };
+
+  nixpkgs.config.cudaSupport = true;
+  nixpkgs.config.permittedInsecurePackages = [
+    "cuda12.9-tensorrt-10.14.1.48"
+  ];
+
+  environment.systemPackages = with pkgs; [
+    cudaPackages.cudatoolkit
+    cudaPackages.cudnn
+    cudaPackages.tensorrt
+    curl
+    curl.dev
+    eigen
+    opencv4
+    nlohmann_json
+    fmt
+    fmt.dev
+    spdlog
+    spdlog.dev
+    tbb
+    tbb.dev
+    zlib
+    zlib.dev
+  ];
   imports = [
     ./hardware-configuration.nix
     ./../../modules/core
@@ -27,6 +55,7 @@
     open = false;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
+    powerManagement.enable = true;
   };
 
   environment.sessionVariables = {

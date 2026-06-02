@@ -35,6 +35,7 @@ in
     ];
     modules-center = [ "clock" ];
     modules-right = [
+      "custom/watson"
       "cpu"
       "memory"
       # "disk"
@@ -176,6 +177,15 @@ in
       tooltip-format = "Power menu";
       format = "<span foreground='${red}'> </span>";
       on-click = "power-menu";
+    };
+    "custom/watson" = {
+      exec = "$HOME/.local/bin/watson-waybar";
+      on-click = "$HOME/.local/bin/watson-waybar-toggle";
+      signal = 10;
+      interval = 1;
+      format = "<span foreground='${orange}'> </span>{}";
+      tooltip = true;
+      tooltip-format = "Watson: {}";
     };
   };
 }

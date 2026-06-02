@@ -44,6 +44,7 @@
     ## Monitoring / fetch
     htop
     onefetch                          # fetch utility for git repo
+    speedtest-cli                     # internet speed test
     wavemon                           # monitoring for wireless network devices
 
     ## Fun / screensaver

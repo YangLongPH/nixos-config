@@ -9,6 +9,7 @@
 
     kernelPackages = pkgs.linuxPackages_7_0;
     kernelModules = [ "hid-nintendo" ];
+    kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
     supportedFilesystems = [ "ntfs" ];
   };
 }
