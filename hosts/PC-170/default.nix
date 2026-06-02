@@ -55,6 +55,7 @@
 
   networking.hosts = {
     "10.10.1.249" = [ "gitlab.goline.vn" ];
+    "10.10.1.24" = [ "repository.goline.vn" ];
   };
   networking.networkmanager.wifi.macAddress = "permanent";
   # Disable WiFi power management to prevent periodic disconnection on rtl8821cu

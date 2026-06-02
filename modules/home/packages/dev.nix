@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   home.packages = with pkgs; [
     ## Lsp
@@ -19,8 +19,10 @@
     llvmPackages_20.clang-tools
 
     ## Python
-    python3
-    python312Packages.ipython
+    (python3.withPackages (ps: with ps; [
+      ipython
+      pyyaml
+    ]))
 
     ## Node.js
     nodejs_22
@@ -30,7 +32,8 @@
     cargo
 
     ## Java
-    temurin-bin-21
+    temurin-bin-11
+    (lib.lowPrio temurin-bin-21)
 
     ## DevOps
     terraform

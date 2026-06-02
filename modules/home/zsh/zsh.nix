@@ -155,6 +155,8 @@
       DISABLE_AUTO_UPDATE=true
       DISABLE_MAGIC_FUNCTIONS=true
       export "MICRO_TRUECOLOR=1"
+      export PATH="$HOME/.local/bin:$PATH"
+      export JAVA_HOME="${pkgs.temurin-bin-11}"
 
       setopt hist_verify
 
