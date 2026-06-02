@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   home.packages = with pkgs; [
     awww
@@ -19,8 +19,12 @@
   ];
   wayland.windowManager.hyprland = {
     enable = true;
-    package = null;
-    portalPackage = null;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
+
+    extraConfig = ''
+      plugin = ${inputs.hy3.packages.${pkgs.system}.hy3}/lib/libhy3.so
+    '';
 
     configType = "hyprlang";
 

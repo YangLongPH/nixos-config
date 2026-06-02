@@ -21,7 +21,7 @@
     };
 
     general = {
-      layout = "dwindle";
+      layout = "hy3";
 
       gaps_in = 6;
       gaps_out = 12;

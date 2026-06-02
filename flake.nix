@@ -31,6 +31,13 @@
     superfile.url = "github:yorukot/superfile";
     zen-browser.url = "github:0xc000022070/zen-browser-flake/beta";
 
+    hyprland.url = "github:hyprwm/Hyprland";
+
+    hy3 = {
+      url = "github:outfoxxed/hy3";
+      inputs.hyprland.follows = "hyprland";
+    };
+
     astronvim-template = {
       url = "github:YangLongPH/astronvim-template";
       flake = false;
