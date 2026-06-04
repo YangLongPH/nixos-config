@@ -22,6 +22,7 @@
     (python3.withPackages (ps: with ps; [
       ipython
       pyyaml
+      opencv4
     ]))
 
     ## Node.js
@@ -47,5 +48,8 @@
     ## Oracle
     oracle-instantclient               # sqlplus CLI + instant client libs
     sqlcl                              # Oracle SQLcl CLI
+
+    ## AWS
+    awscli2
   ];
 }

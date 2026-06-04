@@ -6,6 +6,8 @@
   };
 
   nixpkgs.config.cudaSupport = true;
+  nixpkgs.config.cudaCapabilities = [ "8.9" ];
+  nixpkgs.config.cudaForwardCompat = false;
   nixpkgs.config.permittedInsecurePackages = [
     "cuda12.9-tensorrt-10.14.1.48"
   ];

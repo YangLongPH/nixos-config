@@ -41,6 +41,9 @@
       nfu = "nh-notify nh os switch --update";
       nsearch = "nh search";
 
+      # AWS
+      aws-cc = "aws --profile course-cast";
+
       # python
       piv = "python -m venv .venv";
       psv = "source .venv/bin/activate";

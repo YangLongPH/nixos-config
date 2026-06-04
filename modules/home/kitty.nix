@@ -47,7 +47,7 @@
       "alt+4" = "goto_tab 4";
 
       "ctrl+shift+k" = "clear_terminal reset active";
-      "ctrl+shift+a" = "select_all";
+      "ctrl+shift+a" = "pipe --use-buffer @screen_scrollback wl-copy";
 
       ## Unbind
       "ctrl+shift+left" = "no_op";
