@@ -40,5 +40,9 @@
     lazydocker
     tmux
     glab                               # GitLab CLI
+
+    ## Oracle
+    oracle-instantclient               # sqlplus CLI + instant client libs
+    sqlcl                              # Oracle SQLcl CLI
   ];
 }

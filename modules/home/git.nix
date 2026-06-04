@@ -60,7 +60,7 @@ in
 
     gs = "git status";
     gcl = "git clone";
-    gd = "git diff --word-diff=color --word-diff-regex=.";
+    gd = "git diff --word-diff=color";
 
     ga = "git add";
     gaa = "git add --all";
