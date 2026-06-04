@@ -35,6 +35,9 @@
     temurin-bin-11
     (lib.lowPrio temurin-bin-21)
 
+    ## VCS
+    subversion
+
     ## DevOps
     terraform
     lazydocker
