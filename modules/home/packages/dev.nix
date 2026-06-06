@@ -27,6 +27,7 @@
 
     ## Node.js
     nodejs_22
+    pnpm
 
     ## Rust
     rustc

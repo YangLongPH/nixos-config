@@ -6,8 +6,6 @@
     portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
   };
 
-  services.desktopManager.plasma6.enable = true;
-
   xdg.portal = {
     enable = true;
     xdgOpenUsePortal = true;

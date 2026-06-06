@@ -18,10 +18,16 @@
     adwaita-icon-theme
   ];
 
+  hardware.nvidia-container-toolkit.enable = true;
+
   # Manage the virtualisation services
   virtualisation = {
     docker = {
       enable = true;
+      daemon.settings = {
+        dns = [ "192.168.89.1" "8.8.8.8" ];
+        features.cdi = true;
+      };
     };
     libvirtd = {
       enable = true;

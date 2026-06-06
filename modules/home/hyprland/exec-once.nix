@@ -18,11 +18,11 @@
     "udiskie --automount --notify --smart-tray &"
     "hyprctl setcursor Bibata-Modern-Ice 24 &"
     "init-wallpaper &"
+    "systemctl --user start zen-extension-repos &"
 
     # only start monitor watching screen on laptop
     "${if (host == "p14s" || host == "laptop") then "monitor-watcher &" else ""}"
 
-    "[workspace 1 silent] zen-beta"
     "[workspace 2 silent] kitty"
   ];
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, username, ... }:
+{ config, lib, pkgs, username, ... }:
 {
   nix.settings = {
     substituters = [ "https://cuda-maintainers.cachix.org" ];
@@ -63,6 +63,14 @@
   environment.sessionVariables = {
     GBM_BACKEND = "nvidia-drm";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    LD_LIBRARY_PATH = lib.makeLibraryPath [
+      "/run/opengl-driver"
+      pkgs.cudaPackages.cudatoolkit
+      pkgs.cudaPackages.cudnn
+      pkgs.ffmpeg-full
+      pkgs.libwebp
+      "~/.local/lib/ort-gpu"
+    ];
   };
 
   home-manager.users.${username} = {

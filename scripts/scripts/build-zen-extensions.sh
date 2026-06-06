@@ -2,7 +2,16 @@
 set -e
 
 GITHUB_DIR="/home/yanglong/work/github"
-ZEN_PROFILE="$HOME/.config/zen/3f0perh2.Default Profile"
+ZEN_DIR="$HOME/.config/zen"
+PROFILES_INI="$ZEN_DIR/profiles.ini"
+
+PROFILE_NAME=$(grep -B5 "^Default=1" "$PROFILES_INI" | grep "^Path=" | tail -1 | sed 's/^Path=//')
+IS_RELATIVE=$(grep -B5 "^Default=1" "$PROFILES_INI" | grep "^IsRelative=" | tail -1 | sed 's/^IsRelative=//')
+if [ "$IS_RELATIVE" = "1" ]; then
+  ZEN_PROFILE="$ZEN_DIR/$PROFILE_NAME"
+else
+  ZEN_PROFILE="$PROFILE_NAME"
+fi
 EXT_DIR="$ZEN_PROFILE/extensions"
 
 mkdir -p "$EXT_DIR"
@@ -20,6 +29,14 @@ fi
 echo ""
 echo "=== Building AdGuard AdBlocker (Firefox AMO dev) ==="
 cd "$GITHUB_DIR/AdguardBrowserExtension"
+# pnpm v9 requires explicit approval for packages that run build scripts
+python3 -c "
+import json
+with open('package.json', 'r+') as f:
+    pkg = json.load(f)
+    pkg.setdefault('pnpm', {})['onlyBuiltDependencies'] = ['@swc/core', 'core-js', 'esbuild']
+    f.seek(0); json.dump(pkg, f, indent=2); f.truncate()
+"
 pnpm install
 BUILD_ENV=dev pnpm exec tsx tools/bundle.ts firefox-amo
 BUILD="$GITHUB_DIR/AdguardBrowserExtension/build/dev/firefox-amo"
