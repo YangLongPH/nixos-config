@@ -46,17 +46,4 @@ if [ -f "$BUILD/manifest.json" ]; then
 fi
 
 echo ""
-echo "=== Building Adblock Plus (Firefox devenv) ==="
-cd "$GITHUB_DIR/adblockpluschrome"
-npm install
-npx gulp devenv -t firefox
-BUILD="$GITHUB_DIR/adblockpluschrome/devenv.firefox"
-if [ -f "$BUILD/manifest.json" ]; then
-    echo "$BUILD" > "$EXT_DIR/devbuild@adblockplus.org"
-    echo "✓ Adblock Plus proxy file created"
-fi
-
-echo ""
 echo "=== Done! Restart Zen browser to load extensions ==="
-echo "Note: Google Mail Checker and Save to Pinterest must be installed"
-echo "      manually from Zen's add-ons page (about:addons)"

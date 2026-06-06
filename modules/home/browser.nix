@@ -8,14 +8,11 @@ let
       "/home/yanglong/work/github/darkreader/build/release/firefox";
     "adguardadblockerdev@adguard.com" =
       "/home/yanglong/work/github/AdguardBrowserExtension/build/dev/firefox-amo";
-    "devbuild@adblockplus.org" =
-      "/home/yanglong/work/github/adblockpluschrome/devenv.firefox";
   };
 
   extensionRepos = {
     "darkreader" = "https://github.com/darkreader/darkreader";
     "AdguardBrowserExtension" = "https://github.com/AdguardTeam/AdguardBrowserExtension";
-    "adblockpluschrome" = "https://github.com/adblockplus/adblockpluschrome";
   };
 
   cloneScript = pkgs.writeShellScript "zen-clone-extension-repos" ''
