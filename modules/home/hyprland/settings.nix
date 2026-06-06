@@ -3,6 +3,13 @@
   wayland.windowManager.hyprland.settings = {
     "$mod" = "SUPER";
 
+    env = [
+      "GTK_IM_MODULE,wayland"
+      "QT_IM_MODULE,fcitx"
+      "XMODIFIERS,@im=fcitx"
+      "SDL_IM_MODULE,fcitx"
+    ];
+
     input = {
       kb_layout = "us,fr";
       kb_options = "grp:alt_caps_toggle";

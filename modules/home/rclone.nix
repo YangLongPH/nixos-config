@@ -14,6 +14,7 @@
   ];
 
   home.activation.rcloneSetup = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ${pkgs.util-linux}/bin/umount -l $HOME/GoogleDrive 2>/dev/null || true
     $DRY_RUN_CMD mkdir -p $HOME/GoogleDrive
   '';
 

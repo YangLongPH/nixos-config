@@ -10,6 +10,18 @@ let
       "/home/yanglong/work/github/AdguardBrowserExtension/build/dev/firefox-amo";
   };
 
+  # XPI extensions fetched from AMO at build time — placed directly in the profile.
+  xpiExtensions = {
+    "save-to-pinterest@example.com" = pkgs.fetchurl {
+      url = "https://addons.mozilla.org/firefox/downloads/file/4457457/save_to_pinterest-1.0.xpi";
+      hash = "sha256-GfPSojFNaAcJL4y33ZqDhQfO/SEUaK6gat4rZvZTnsI=";
+    };
+    "{00094123-f5bf-4e1e-8a23-6e9e27d26d8e}" = pkgs.fetchurl {
+      url = "https://addons.mozilla.org/firefox/downloads/file/4725365/user_js_and_css-3.1.3.xpi";
+      hash = "sha256-DSZ/H5fj2osC6G84V0UrlCo2xiWTwAHBlbssW/V2tzY=";
+    };
+  };
+
   extensionRepos = {
     "darkreader" = "https://github.com/darkreader/darkreader";
     "AdguardBrowserExtension" = "https://github.com/AdguardTeam/AdguardBrowserExtension";
@@ -90,6 +102,10 @@ in
             printf '%s' "${path}" > "$EXT_DIR/${id}"
           fi
         '') unpackedExtensions)}
+
+        ${lib.concatStringsSep "\n" (lib.mapAttrsToList (id: xpi: ''
+          cp -f "${xpi}" "$EXT_DIR/${id}.xpi"
+        '') xpiExtensions)}
       fi
     fi
   '';

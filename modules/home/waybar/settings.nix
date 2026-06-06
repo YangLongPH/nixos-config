@@ -137,7 +137,7 @@ in
     };
     "custom/fcitx5" = {
       exec = "fcitx5-remote -n | sed 's/keyboard-us/EN/;s/unikey/VI/'";
-      interval = "once";
+      interval = 30;
       signal = 1;
       format = "⌨ {}";
       on-click = "fcitx5-remote -t && pkill -RTMIN+1 waybar";
