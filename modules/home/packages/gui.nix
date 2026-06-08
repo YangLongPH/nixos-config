@@ -29,6 +29,10 @@
     remmina
     zenity
 
+    ## Diagramming
+    drawio
+    penpot-desktop
+
     ## Level editor
     ldtk
     tiled

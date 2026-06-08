@@ -22,5 +22,6 @@
     # ./qmk.nix
     ./piper.nix
     ./input-method.nix
+    ./excalidraw.nix
   ];
 }
