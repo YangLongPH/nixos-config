@@ -5,6 +5,7 @@
     ./bootloader.nix
     ./hardware.nix
     ./xserver.nix
+    ./plasma.nix
     ./network.nix
     ./bluetooth.nix
     ./fonts.nix
