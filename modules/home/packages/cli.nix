@@ -35,6 +35,10 @@
     ## Time tracking
     watson                            # CLI time tracker
 
+    ## Database
+    usql                              # universal SQL CLI (Oracle, Postgres, MySQL, ...)
+    rlwrap                            # readline wrapper (adds history/editing to sqlplus etc.)
+
     ## TUI
     epy                               # ebook reader
     gtt                               # google translate TUI

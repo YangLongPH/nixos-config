@@ -29,6 +29,9 @@
     remmina
     zenity
 
+    ## Database
+    dbeaver-bin
+
     ## Diagramming
     drawio
     penpot-desktop
