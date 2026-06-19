@@ -81,7 +81,6 @@ in
     gch = "git checkout";
     gchb = "git checkout -b";
 
-    glg = "serie";
     glog = "git log --oneline --decorate --graph";
     glol = "git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'";
     glola = "git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --all";

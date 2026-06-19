@@ -17,7 +17,7 @@ in
     permissions = {
       defaultMode = "bypassPermissions";
     };
-    theme = "light";
+    theme = "dark";
     skipDangerousModePermissionPrompt = true;
   };
 
@@ -25,7 +25,7 @@ in
     permissions = {
       defaultMode = "bypassPermissions";
     };
-    theme = "light";
+    theme = "dark";
     skipDangerousModePermissionPrompt = true;
   };
 
@@ -33,7 +33,7 @@ in
     permissions = {
       defaultMode = "bypassPermissions";
     };
-    theme = "light";
+    theme = "dark";
     skipDangerousModePermissionPrompt = true;
   };
 }

@@ -45,6 +45,9 @@
     toipe                             # typing test in the terminal
     ttyper                            # cli typing test
 
+    ## Networking
+    nettools                             # netstat, ifconfig, etc.
+
     ## Monitoring / fetch
     htop
     onefetch                          # fetch utility for git repo
@@ -71,6 +74,7 @@
     mpv
 
     ## Utilities
+    findutils                            # find, xargs, locate
     entr                              # perform action when file change
     ffmpeg
     file                              # Show file information

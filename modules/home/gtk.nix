@@ -68,4 +68,9 @@ in
     package = pkgs.bibata-cursors;
     size = 24;
   };
+
+  # KDE plasma-gtk-config overwrites HM's .gtkrc-2.0 symlink; remove stale backup so HM can re-create it.
+  home.activation.removeGtkrcBackup = lib.hm.dag.entryBefore [ "checkFilesChanged" ] ''
+    rm -f "$HOME/.gtkrc-2.0.hm-backup"
+  '';
 }
