@@ -41,6 +41,8 @@
 
       "match:class ^(xdg-desktop-portal-gtk)$, dim_around on"
 
+      "match:class ^(jp-co-nec-frw0000-pr-winctl-Frw00WindowController)$, float on"
+
       "match:xwayland true, rounding 0"
 
       # No gaps when only
