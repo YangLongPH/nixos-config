@@ -42,6 +42,7 @@
       "match:class ^(xdg-desktop-portal-gtk)$, dim_around on"
 
       "match:class ^(jp-co-nec-frw0000-pr-winctl-Frw00WindowController)$, float on"
+      "match:class ^(jp-co-nec-frw0000-pr-winctl-Frw00WindowController)$, center 1"
 
       "match:xwayland true, rounding 0"
 

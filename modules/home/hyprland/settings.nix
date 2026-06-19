@@ -117,5 +117,20 @@
     xwayland = {
       force_zero_scaling = true;
     };
+
+    "plugin:hy3" = {
+      tabs = {
+        height = 20;
+        padding = 6;
+        rounding = 3;
+
+        "col.active" = "rgba(7C6F64cc)";
+        "col.active.text" = "rgba(FBF1C7ff)";
+        "col.inactive" = "rgba(3C3836cc)";
+        "col.inactive.text" = "rgba(FBF1C7ff)";
+        "col.urgent" = "rgba(CC241Dcc)";
+        "col.urgent.text" = "rgba(FBF1C7ff)";
+      };
+    };
   };
 }

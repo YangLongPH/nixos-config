@@ -93,6 +93,7 @@
     wget
     wl-clipboard                      # clipboard utils for wayland (wl-copy, wl-paste)
     xdg-utils
+    xdotool                              # simulate keyboard/mouse input (X11/XWayland only)
 
     # winetricks
     # wineWow64Packages.waylandFull

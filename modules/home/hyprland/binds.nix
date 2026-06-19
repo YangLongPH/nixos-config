@@ -72,7 +72,7 @@
       "$mod, k, alterzorder, top"
       "$mod, l, alterzorder, top"
 
-      "CTRL ALT, up, exec, hyprctl dispatch focuswindow floating"
+      "CTRL ALT, up, exec, hyprctl dispatch focuswindow floating && hyprctl dispatch bringactivetotop"
       "CTRL ALT, down, exec, hyprctl dispatch focuswindow tiled"
 
       # switch workspace
