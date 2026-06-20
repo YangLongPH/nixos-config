@@ -25,6 +25,10 @@
       daemon.settings = {
         dns = [ "192.168.89.1" "8.8.8.8" ];
         features.cdi = true;
+        runtimes.nvidia = {
+          path = "${pkgs.nvidia-container-toolkit}/bin/nvidia-container-runtime";
+          runtimeArgs = [];
+        };
       };
     };
     libvirtd = {

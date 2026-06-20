@@ -1,0 +1,45 @@
+services:
+  ecs-gpu-init:
+    image: nvidia/cuda:12.6-base-ubuntu22.04
+    runtime: nvidia
+    privileged: true
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+    volumes:
+      - /var/lib/ecs/gpu:/var/lib/ecs/gpu
+    command: >
+      bash -c "
+        mkdir -p /var/lib/ecs/gpu &&
+        UUID=$$(nvidia-smi --query-gpu=uuid --format=csv,noheader | head -1 | tr -d ' ') &&
+        DV=$$(nvidia-smi --query-gpu=driver_version --format=csv,noheader | head -1 | tr -d ' ') &&
+        printf '{\"DriverVersion\":\"%s\",\"GPUIDs\":[\"%s\"]}\n' \"$$DV\" \"$$UUID\" > /var/lib/ecs/gpu/nvidia-gpu-info.json
+      "
+    restart: "no"
+
+  ecs-agent:
+    image: amazon/amazon-ecs-agent:latest
+    network_mode: host
+    privileged: true
+    restart: on-failure
+    depends_on:
+      ecs-gpu-init:
+        condition: service_completed_successfully
+    environment:
+      ECS_CLUSTER: "cc-golf-dev-local_Batch_ee58bf0f-2a2c-3d64-a13b-967eac71e82f"
+      ECS_EXTERNAL: "true"
+      ECS_ENABLE_GPU_SUPPORT: "true"
+      ECS_DATADIR: /ecs-data
+      AWS_DEFAULT_REGION: us-east-1
+      ECS_AVAILABLE_LOGGING_DRIVERS: '["json-file","awslogs"]'
+      ECS_ENABLE_TASK_IAM_ROLE: "true"
+      ECS_ENABLE_TASK_IAM_ROLE_NETWORK_HOST: "true"
+      ECS_ENABLE_AWSLOGS_EXECUTIONROLE_OVERRIDE: "true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/ecs/gpu:/var/lib/ecs/gpu:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /var/lib/ecs:/var/lib/ecs
+      - ecs-data:/ecs-data
+
+volumes:
+  ecs-data:

@@ -13,6 +13,8 @@
   ];
 
   environment.systemPackages = with pkgs; [
+    nvidia-container-toolkit
+    nvidia-container-toolkit.tools
     cudaPackages.cudatoolkit
     cudaPackages.cudnn
     cudaPackages.tensorrt

@@ -1,6 +1,16 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   services = {
+    tailscale.enable = true;
+
+    openssh = {
+      enable = true;
+      settings = {
+        PasswordAuthentication = true;
+        PermitRootLogin = "no";
+      };
+    };
+
     gvfs.enable = true;
 
     gnome = {
@@ -19,7 +29,7 @@
     ];
 
     logind.settings.Login = {
-      # don’t shutdown when power button is short-pressed
+      # don't shutdown when power button is short-pressed
       HandlePowerKey = "ignore";
 
       # ignore lid close when docked/external monitor conected
@@ -27,5 +37,7 @@
     };
 
     udisks2.enable = true;
+
+    amazon-ssm-agent.enable = true;
   };
 }
