@@ -47,6 +47,7 @@
 
     ## Networking
     nettools                             # netstat, ifconfig, etc.
+    nmap                                 # network scanner
 
     ## Monitoring / fetch
     htop
@@ -94,6 +95,7 @@
     wl-clipboard                      # clipboard utils for wayland (wl-copy, wl-paste)
     xdg-utils
     xdotool                              # simulate keyboard/mouse input (X11/XWayland only)
+    ydotool                              # simulate keyboard/mouse input (Wayland native)
 
     # winetricks
     # wineWow64Packages.waylandFull

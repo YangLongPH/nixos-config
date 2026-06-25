@@ -29,6 +29,16 @@
         identityFile = "~/.ssh/id_ed25519";
         identitiesOnly = true;
       };
+
+      github-goline = {
+        host = "github-w.com";
+        hostname = "ssh.github.com";
+        user = "git";
+        port = 443;
+        identityFile = "~/.ssh/id_ed25519_goline";
+        identitiesOnly = true;
+        controlMaster = "no";
+      };
     };
   };
 
