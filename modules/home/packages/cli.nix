@@ -21,6 +21,7 @@
     bitwise                           # cli tool for bit / hex manipulation
     broot                             # tree files view
     caligula                          # User-friendly, lightweight TUI for disk imaging
+    huggingface-cli                    # HuggingFace CLI
     hyperfine                         # benchmarking tool
     just                              # command runner (makefile like)
     pastel                            # cli to manipulate colors

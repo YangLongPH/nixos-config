@@ -39,6 +39,32 @@
 
   powerManagement.cpuFreqGovernor = "performance";
 
+  services.calibre-web = {
+    enable = true;
+    listen.ip = "0.0.0.0";
+    listen.port = 8083;
+    openFirewall = true;
+    options = {
+      calibreLibrary = "/var/lib/calibre-web/library";
+      enableBookUploading = true;
+    };
+  };
+
+  systemd.tmpfiles.rules = [
+    "d /var/lib/calibre-web/library 0755 calibre-web calibre-web -"
+  ];
+
+  systemd.services.calibre-web = {
+    path = [ pkgs.calibre ];
+    preStart = ''
+      if [ ! -f /var/lib/calibre-web/library/metadata.db ]; then
+        ${pkgs.calibre}/bin/calibredb \
+          --with-library=/var/lib/calibre-web/library \
+          list >/dev/null
+      fi
+    '';
+  };
+
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "vi_VN";
     LC_IDENTIFICATION = "vi_VN";

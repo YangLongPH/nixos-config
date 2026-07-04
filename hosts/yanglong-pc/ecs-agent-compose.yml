@@ -1,10 +1,15 @@
 services:
   ecs-gpu-init:
-    image: nvidia/cuda:12.6-base-ubuntu22.04
-    runtime: nvidia
+    image: nvcr.io/nvidia/cuda:12.6.0-base-ubuntu22.04
     privileged: true
-    environment:
-      NVIDIA_VISIBLE_DEVICES: all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: cdi
+              device_ids:
+                - nvidia.com/gpu=all
+              capabilities: [gpu]
     volumes:
       - /var/lib/ecs/gpu:/var/lib/ecs/gpu
     command: >
@@ -24,6 +29,8 @@ services:
     depends_on:
       ecs-gpu-init:
         condition: service_completed_successfully
+    env_file:
+      - .env.ecs
     environment:
       ECS_CLUSTER: "cc-golf-dev-local_Batch_ee58bf0f-2a2c-3d64-a13b-967eac71e82f"
       ECS_EXTERNAL: "true"

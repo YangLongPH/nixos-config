@@ -19,6 +19,7 @@
     ## Office
     libreoffice
     gnome-calculator
+    foliate # EPUB reader
 
     ## Utility
     dconf-editor
