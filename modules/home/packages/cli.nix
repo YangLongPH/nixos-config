@@ -39,6 +39,8 @@
     ## Database
     usql                              # universal SQL CLI (Oracle, Postgres, MySQL, ...)
     rlwrap                            # readline wrapper (adds history/editing to sqlplus etc.)
+    lazysql                           # TUI for databases
+    lazydocker                        # TUI for Docker
 
     ## TUI
     epy                               # ebook reader
@@ -49,6 +51,8 @@
     ## Networking
     nettools                             # netstat, ifconfig, etc.
     nmap                                 # network scanner
+    inetutils                            # telnet, ftp, etc.
+    samba                                # SMB client (smbclient, smbget)
 
     ## Monitoring / fetch
     htop

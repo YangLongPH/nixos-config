@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     nemo-with-extensions
     nemo-fileroller
+    gvfs                               # needed for SMB/network shares in Nemo
   ];
 
   dconf.settings = {

@@ -201,6 +201,27 @@
         zle -N zle-line-init
         zle -N zle-line-finish
       fi
+
+      redmine-time() {
+        local from=''${1:-$(date -d "$(date +%Y-%m-%d) - $(( $(date +%u) - 1 )) days" +%Y-%m-%d)}
+        local to=''${2:-$(date -d "$(date +%Y-%m-%d) + $(( 7 - $(date +%u) )) days" +%Y-%m-%d)}
+        curl -s "https://pm2.goline.vn/time_entries.json?user_id=152&from=''${from}&to=''${to}&limit=100" \
+          -H "X-Redmine-API-Key: ef7b894244ccd7700945ad6832ffe2b3040ddb8b" | python3 -c "
+import json, sys
+from collections import defaultdict
+data = json.load(sys.stdin)
+by_project = defaultdict(float)
+by_day = defaultdict(float)
+for e in data.get('time_entries', []):
+    by_project[e['project']['name']] += e['hours']
+    by_day[e['spent_on']] += e['hours']
+print('--- By project ---')
+[print(f'  {h:.2f}h  {p}') for p, h in sorted(by_project.items(), key=lambda x: -x[1])]
+print('--- By day ---')
+[print(f'  {d}: {by_day[d]:.2f}h') for d in sorted(by_day)]
+print(f'TOTAL: {sum(by_project.values()):.2f}h')
+"
+      }
     '';
   };
 

@@ -1,5 +1,11 @@
 { config, lib, pkgs, ... }:
 {
+  environment.etc."samba/smb.conf".text = ''
+    [global]
+      workgroup = WORKGROUP
+      client min protocol = SMB2
+  '';
+
   services = {
     tailscale.enable = true;
 

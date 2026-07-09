@@ -28,6 +28,7 @@
   environment.systemPackages = with pkgs; [
     wget
     git
+    cifs-utils                         # mount.cifs for SMB/CIFS shares
   ];
 
   time.timeZone = "Asia/Ho_Chi_Minh";

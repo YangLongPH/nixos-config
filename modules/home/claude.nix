@@ -1,6 +1,16 @@
 { pkgs, inputs, ... }:
 let
   claude-pkg = inputs.claude-code.packages.${pkgs.system}.default;
+  mcpServers = {
+    playwright = {
+      command = "npx";
+      args = [
+        "@playwright/mcp@latest"
+        "--executable-path"
+        "/etc/profiles/per-user/yanglong/bin/google-chrome-stable"
+      ];
+    };
+  };
 in
 {
   home.packages = [ claude-pkg ];
@@ -19,6 +29,7 @@ in
     };
     theme = "dark";
     skipDangerousModePermissionPrompt = true;
+    inherit mcpServers;
   };
 
   home.file.".claude-work2/settings.json".text = builtins.toJSON {
@@ -27,6 +38,7 @@ in
     };
     theme = "dark";
     skipDangerousModePermissionPrompt = true;
+    inherit mcpServers;
   };
 
   home.file.".claude-personal/settings.json".text = builtins.toJSON {
@@ -35,5 +47,6 @@ in
     };
     theme = "dark";
     skipDangerousModePermissionPrompt = true;
+    inherit mcpServers;
   };
 }
