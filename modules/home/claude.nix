@@ -8,6 +8,8 @@ let
         "@playwright/mcp@latest"
         "--executable-path"
         "/etc/profiles/per-user/yanglong/bin/google-chrome-stable"
+        "--headless"
+        "--no-sandbox"
       ];
     };
   };
