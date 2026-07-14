@@ -95,7 +95,9 @@ in
       fi
 
       # --- Extract ticket number ---
-      COMMIT_MSG=$(git log -1 --format="%s %b" 2>/dev/null | tr '\n' ' ')
+      COMMIT_SUBJECT=$(git log -1 --format="%s" 2>/dev/null)
+      COMMIT_BODY=$(git log -1 --format="%b" 2>/dev/null | tr '\n' ' ')
+      COMMIT_MSG="$COMMIT_SUBJECT $COMMIT_BODY"
       TICKET=$(echo "$COMMIT_MSG" | grep -oE '#[0-9]+' | head -1 | tr -d '#')
       [[ -z "$TICKET" ]] && exit 0
 
@@ -144,7 +146,7 @@ in
       hours=$(awk "BEGIN { printf \"%.2f\", $quarters * 0.25 }")
 
       # --- Gọi Redmine API ---
-      COMMENT=$(echo "$COMMIT_MSG" | head -c 255 | sed 's/\\/\\\\/g; s/"/\\"/g')
+      COMMENT=$(echo "$COMMIT_SUBJECT" | head -c 200 | sed 's/\\/\\\\/g; s/"/\\"/g')
       resp_file=$(mktemp)
 
       http_code=$(curl -s \
@@ -159,13 +161,13 @@ in
       if [[ "$http_code" == "201" ]]; then
         entry_id=$(jq -r '.time_entry.id' "$resp_file" 2>/dev/null)
         echo "[redmine-logtime] ✓ #$TICKET: ''${hours}h logged ($start_hm→$now_hm, entry #$entry_id)"
-        printf '{"ts":"%s","ticket":%s,"hours":%s,"entry_id":%s,"status":"ok","commit":"%s"}\n' \
-          "$(date -Iseconds)" "$TICKET" "$hours" "''${entry_id:-null}" "$COMMENT" >> "$LOG"
+        printf '{"ts":"%s","ticket":%s,"from":"%s","to":"%s","hours":%s,"entry_id":%s,"status":"ok","comment":"%s"}\n' \
+          "$(date -Iseconds)" "$TICKET" "$start_hm" "$now_hm" "$hours" "''${entry_id:-null}" "$COMMENT" >> "$LOG"
       else
         body=$(cat "$resp_file")
         echo "[redmine-logtime] ✗ #$TICKET: HTTP $http_code — $body" >&2
-        printf '{"ts":"%s","ticket":%s,"hours":%s,"status":"http_%s","error":"%s"}\n' \
-          "$(date -Iseconds)" "$TICKET" "$hours" "$http_code" \
+        printf '{"ts":"%s","ticket":%s,"from":"%s","to":"%s","hours":%s,"status":"http_%s","error":"%s"}\n' \
+          "$(date -Iseconds)" "$TICKET" "$start_hm" "$now_hm" "$hours" "$http_code" \
           "$(echo "$body" | sed 's/"/\\"/g')" >> "$LOG"
       fi
 

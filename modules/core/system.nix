@@ -29,6 +29,7 @@
     wget
     git
     cifs-utils                         # mount.cifs for SMB/CIFS shares
+    rustdesk
   ];
 
   time.timeZone = "Asia/Ho_Chi_Minh";
