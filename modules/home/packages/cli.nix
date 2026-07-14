@@ -85,6 +85,7 @@
     ffmpeg
     file                              # Show file information
     jq                                # JSON processor
+    yq-go                             # YAML processor
     killall
     libnotify
     mimeo

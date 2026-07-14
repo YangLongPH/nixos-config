@@ -146,7 +146,7 @@ in
       hours=$(awk "BEGIN { printf \"%.2f\", $quarters * 0.25 }")
 
       # --- Gọi Redmine API ---
-      COMMENT=$(echo "$COMMIT_SUBJECT" | head -c 200 | sed 's/\\/\\\\/g; s/"/\\"/g')
+      COMMENT="$(echo "$COMMIT_SUBJECT" | head -c 180 | sed 's/\\/\\\\/g; s/"/\\"/g') ($start_hm→$now_hm)"
       resp_file=$(mktemp)
 
       http_code=$(curl -s \
