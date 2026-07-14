@@ -80,6 +80,7 @@ in
       REDMINE_URL="https://pm2.goline.vn"
       REDMINE_API_KEY=""
       WORK_START="08:00"
+      WORK_END="18:00"
       LUNCH_START="11:30"
       LUNCH_END="13:00"
       ACTIVITY_ID=9
@@ -108,6 +109,7 @@ in
 
       ts_today() { date -d "$today $1:00" +%s; }
       work_start_ts=$(ts_today "$WORK_START")
+      work_end_ts=$(ts_today "$WORK_END")
       lunch_start_ts=$(ts_today "$LUNCH_START")
       lunch_end_ts=$(ts_today "$LUNCH_END")
 
@@ -150,6 +152,10 @@ in
       quarters=$(( (total_minutes + 7) / 15 ))
       hours=$(awk "BEGIN { printf \"%.2f\", $quarters * 0.25 }")
 
+      # --- Cảnh báo ngoài giờ (không cap, vẫn log) ---
+      (( now_ts > work_end_ts )) && \
+        echo "[redmine-logtime] ⚠️  ngoài giờ ($now_hm > $WORK_END): vẫn log ''${hours}h"
+
       # --- Gọi Redmine API ---
       COMMENT="$(echo "$COMMIT_SUBJECT" | head -c 180 | sed 's/\\/\\\\/g; s/"/\\"/g') ($start_hm→$now_hm)"
       resp_file=$(mktemp)
@@ -188,6 +194,7 @@ in
     REDMINE_URL="https://pm2.goline.vn"
 
     WORK_START="08:00"
+    WORK_END="18:00"     # warning nếu commit sau giờ này (không cap — overtime vẫn log)
     LUNCH_START="11:30"
     LUNCH_END="13:00"
 
