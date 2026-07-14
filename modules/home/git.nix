@@ -123,6 +123,11 @@ in
         (( now_ts < work_start_ts )) && start_ts=$now_ts || start_ts=$work_start_ts
       fi
 
+      # Nếu start nằm trong lunch window → advance lên lunch_end (tránh lunch ăn hết net time)
+      if (( start_ts >= lunch_start_ts && start_ts < lunch_end_ts )); then
+        start_ts=$lunch_end_ts
+      fi
+
       start_hm=$(date -d "@$start_ts" +%H:%M)
 
       # --- Tính giờ, trừ nghỉ trưa ---
