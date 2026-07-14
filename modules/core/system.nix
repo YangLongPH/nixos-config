@@ -29,7 +29,8 @@
     wget
     git
     cifs-utils                         # mount.cifs for SMB/CIFS shares
-    rustdesk
+    rustdesk-flutter
+    # globalprotect-openconnect        # work VPN (portal: 222.252.25.187:10443)
   ];
 
   time.timeZone = "Asia/Ho_Chi_Minh";

@@ -33,6 +33,7 @@
     ./watson.nix                      # time tracker + Google Drive sync
     ./rofi/rofi.nix                   # launcher
     ./../../scripts/scripts.nix       # personal scripts
+    ./rustdesk.nix                    # remote desktop
     ./slack.nix                       # slack
     ./ssh.nix                         # ssh config
     # ./spicetify.nix                   # spotify client

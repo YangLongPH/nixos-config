@@ -9,6 +9,7 @@
       "10.10.1.25" = [ "vgapi-psi.goline.vn" ];
       "10.10.1.26" = [ "vgaia-psi.goline.vn" ];
       "10.10.1.27" = [ "vmarket-psi.goline.vn" ];
+      "192.168.2.5" = [ "rustdesk.goline.vn" ];
     };
     # nameservers = [
     #   "8.8.8.8"
