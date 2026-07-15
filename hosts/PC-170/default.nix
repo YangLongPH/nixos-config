@@ -11,47 +11,19 @@
   # boot.extraModulePackages = [ config.boot.kernelPackages.rtl8821cu ];
   # boot.blacklistedKernelModules = [ "rtw88_8821cu" "rtw88_8821c" ];
 
-  # Overide network metic by dhcpcd
+  # Lock wired metric via dhcpcd (dhcpcd manages enp34s0)
   networking.dhcpcd.extraConfig = ''
     interface enp34s0
-    metric 200
-    interface wlp35s0
-    metric 100
+    metric 700
   '';
-  # networking.networkmanager.ensureProfiles = {
-  #   environmentFiles = [ "/etc/networkmanager/wifi-secrets.env" ];
-  #   profiles = {
-  #     "wired-170" = {
-  #       connection = {
-  #         id = "wired-170";
-  #         type = "ethernet";
-  #         "interface-name" = "enp34s0";
-  #       };
-  #       ipv4 = {
-  #         method = "auto";
-  #         "route-metric" = "200";
-  #       };
-  #     };
-  #     "Goline" = {
-  #       connection = {
-  #         id = "Goline";
-  #         type = "wifi";
-  #       };
-  #       wifi = {
-  #         ssid = "Goline";
-  #         mode = "infrastructure";
-  #       };
-  #       "wifi-security" = {
-  #         "key-mgmt" = "wpa-psk";
-  #         psk = "$GOLINE_PASSWORD";
-  #       };
-  #       ipv4 = {
-  #         method = "auto";
-  #         "route-metric" = "100";
-  #       };
-  #     };
-  #   };
-  # };
+
+  # Lock WiFi metric — modify existing NM profile, no need to redefine password
+  system.activationScripts.nmWifiMetric = {
+    deps = [ "etc" ];
+    text = ''
+      ${pkgs.networkmanager}/bin/nmcli connection modify "Goline" ipv4.route-metric 100 2>/dev/null || true
+    '';
+  };
 
   networking.hosts = {
     "10.10.1.249" = [ "gitlab.goline.vn" ];
