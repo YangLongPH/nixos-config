@@ -49,6 +49,7 @@
     ttyper                            # cli typing test
 
     ## Networking
+    grpcurl                              # gRPC curl
     nettools                             # netstat, ifconfig, etc.
     nmap                                 # network scanner
     inetutils                            # telnet, ftp, etc.
