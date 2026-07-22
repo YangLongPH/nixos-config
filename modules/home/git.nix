@@ -145,11 +145,11 @@ in
       if (( total_minutes < MIN_MINUTES )); then
         hours_fmt=$(awk "BEGIN { printf \"%.2f\", $total_secs / 3600 }")
         min_fmt=$(awk "BEGIN { printf \"%.2f\", $MIN_MINUTES / 60 }")
-        echo "[redmine-logtime] #$TICKET: ''${hours_fmt}h < ''${min_fmt}h min, bỏ qua ($start_hm→$now_hm)"
+        echo "[redmine-logtime] [$start_hm→$now_hm] #$TICKET: ''${hours_fmt}h < ''${min_fmt}h min, bỏ qua"
         exit 0
       fi
 
-      quarters=$(( (total_minutes + 7) / 15 ))
+      quarters=$(( (total_minutes + 14) / 15 ))
       hours=$(awk "BEGIN { printf \"%.2f\", $quarters * 0.25 }")
 
       # --- Cảnh báo ngoài giờ (không cap, vẫn log) ---
@@ -157,7 +157,7 @@ in
         echo "[redmine-logtime] ⚠️  ngoài giờ ($now_hm > $WORK_END): vẫn log ''${hours}h"
 
       # --- Gọi Redmine API ---
-      COMMENT="$(echo "$COMMIT_SUBJECT" | head -c 180 | sed 's/\\/\\\\/g; s/"/\\"/g') ($start_hm→$now_hm)"
+      COMMENT="[$start_hm→$now_hm] $(echo "$COMMIT_SUBJECT" | head -c 230 | sed 's/\\/\\\\/g; s/"/\\"/g')"
       resp_file=$(mktemp)
 
       http_code=$(curl -s \
@@ -171,7 +171,7 @@ in
 
       if [[ "$http_code" == "201" ]]; then
         entry_id=$(jq -r '.time_entry.id' "$resp_file" 2>/dev/null)
-        echo "[redmine-logtime] ✓ #$TICKET: ''${hours}h logged ($start_hm→$now_hm, entry #$entry_id)"
+        echo "[redmine-logtime] [$start_hm→$now_hm] ✓ #$TICKET: ''${hours}h logged"
         printf '{"ts":"%s","ticket":%s,"from":"%s","to":"%s","hours":%s,"entry_id":%s,"status":"ok","comment":"%s"}\n' \
           "$(date -Iseconds)" "$TICKET" "$start_hm" "$now_hm" "$hours" "''${entry_id:-null}" "$COMMENT" >> "$LOG"
       else
