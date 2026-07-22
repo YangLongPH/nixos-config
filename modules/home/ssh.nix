@@ -21,6 +21,16 @@
         userKnownHostsFile = "~/.ssh/known_hosts";
       };
 
+      goline-agent01 = {
+        host = "goline-agent01";
+        hostname = "10.10.3.200";
+        user = "goline-agent01";
+        extraOptions = {
+          RequestTTY = "yes";
+          RemoteCommand = "zsh -l";
+        };
+      };
+
       github = {
         host = "github.com";
         hostname = "ssh.github.com";
