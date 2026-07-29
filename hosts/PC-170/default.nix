@@ -7,21 +7,22 @@
 
   powerManagement.cpuFreqGovernor = "performance";
 
-  # Bootloader config driver for usb tp-link archer T2U Nano 
-  # boot.extraModulePackages = [ config.boot.kernelPackages.rtl8821cu ];
-  # boot.blacklistedKernelModules = [ "rtw88_8821cu" "rtw88_8821c" ];
+  # rtl8821cu (out-of-tree) driver dedicated to the USB TP-Link Archer T2U Nano.
+  # The in-tree rtw88_8821cu/rtw88_8821c driver must be blacklisted since it caused
+  # periodic disconnections - the out-of-tree driver is stable (paired with the
+  # powersave/autosuspend fixes below).
+  boot.extraModulePackages = [ config.boot.kernelPackages.rtl8821cu ];
+  # rtl8188ee = internal PCI wifi card, confirmed dead hardware (RF path dead, 0 rx/tx,
+  # scans find zero APs even though driver/firmware load cleanly) - blacklisted so the
+  # kernel stops loading a driver for it; switched permanently to the USB Archer T2U Nano above.
+  boot.blacklistedKernelModules = [ "rtw88_8821cu" "rtw88_8821c" "rtl8188ee" ];
 
-  # Lock wired metric via dhcpcd (dhcpcd manages enp34s0)
-  networking.dhcpcd.extraConfig = ''
-    interface enp34s0
-    metric 700
-  '';
-
-  # Lock WiFi metric — modify existing NM profile, no need to redefine password
+  # Lock metrics via NM (dhcpcd is inactive, NM manages all interfaces)
   system.activationScripts.nmWifiMetric = {
     deps = [ "etc" ];
     text = ''
       ${pkgs.networkmanager}/bin/nmcli connection modify "Goline" ipv4.route-metric 100 2>/dev/null || true
+      ${pkgs.networkmanager}/bin/nmcli connection modify "wired-170" ipv4.route-metric 700 2>/dev/null || true
     '';
   };
 

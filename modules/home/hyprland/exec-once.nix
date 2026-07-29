@@ -18,8 +18,7 @@
     "udiskie --automount --notify --smart-tray &"
     "hyprctl setcursor Bibata-Modern-Ice 24 &"
     "init-wallpaper &"
-    "rustdesk --service &"
-    "systemctl --user start zen-extension-repos &"
+"systemctl --user start zen-extension-repos &"
 
     # only start monitor watching screen on laptop
     "${if (host == "p14s" || host == "laptop") then "monitor-watcher &" else ""}"

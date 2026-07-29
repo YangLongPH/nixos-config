@@ -141,6 +141,10 @@
       "$mod, V, exec, toggle-rofi \"cliphist list | rofi -dmenu -theme-str 'window {width: 50%;} listview {columns: 1;}' | cliphist decode | wl-copy\""
     ];
 
+    # Consume Super_L key-release so it doesn't leak into Remmina/RDP windows
+    # (prevents Windows Start menu from opening on workspace switch)
+    bindr = [ "SUPER, Super_L, exec, true" ];
+
     # mouse binding
     bindm = [
       "$mod, mouse:272, movewindow"

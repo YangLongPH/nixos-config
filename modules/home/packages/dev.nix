@@ -1,6 +1,10 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, ... }:
 {
   home.packages = with pkgs; [
+    ## AI coding agents
+    codex                                          # OpenAI Codex CLI
+    inputs.antigravity-nix.packages.${pkgs.system}.google-antigravity-cli  # Antigravity CLI (agy)
+
     ## Lsp
     nixd # nix
 
@@ -37,6 +41,9 @@
     temurin-bin-11
     (lib.lowPrio temurin-bin-21)
     jetbrains.idea-oss
+
+    ## .NET
+    dotnet-sdk_10
 
     ## VCS
     subversion

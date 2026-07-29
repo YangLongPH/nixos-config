@@ -10,6 +10,7 @@
     };
 
     claude-code.url = "github:sadjow/claude-code-nix";
+    antigravity-nix.url = "github:jacopone/antigravity-nix";
 
     nix-gaming.url = "github:fufexan/nix-gaming";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
