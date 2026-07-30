@@ -31,39 +31,30 @@
     tbb.dev
     zlib
     zlib.dev
+    ffmpeg-full
   ];
   imports = [
     ./hardware-configuration.nix
     ./../../modules/core
+    ./../../modules/core/trellis.nix
   ];
 
   powerManagement.cpuFreqGovernor = "performance";
 
-  services.calibre-web = {
-    enable = true;
-    listen.ip = "0.0.0.0";
-    listen.port = 8083;
-    openFirewall = true;
-    options = {
-      calibreLibrary = "/var/lib/calibre-web/library";
-      enableBookUploading = true;
-    };
-  };
+  # services.calibre-web = {
+  #   enable = true;
+  #   listen.ip = "0.0.0.0";
+  #   listen.port = 8083;
+  #   openFirewall = true;
+  #   options = {
+  #     calibreLibrary = "/var/lib/calibre-web/library";
+  #     enableBookUploading = true;
+  #   };
+  # };
 
-  systemd.tmpfiles.rules = [
-    "d /var/lib/calibre-web/library 0755 calibre-web calibre-web -"
-  ];
-
-  systemd.services.calibre-web = {
-    path = [ pkgs.calibre ];
-    preStart = ''
-      if [ ! -f /var/lib/calibre-web/library/metadata.db ]; then
-        ${pkgs.calibre}/bin/calibredb \
-          --with-library=/var/lib/calibre-web/library \
-          list >/dev/null
-      fi
-    '';
-  };
+  # systemd.tmpfiles.rules = [
+  #   "d /var/lib/calibre-web/library 0755 calibre-web calibre-web -"
+  # ];
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "vi_VN";
@@ -98,9 +89,23 @@
       pkgs.cudaPackages.cudnn
       pkgs.ffmpeg-full
       pkgs.libwebp
+      pkgs.stdenv.cc.cc.lib
+      pkgs.zlib
       "~/.local/lib/ort-gpu"
     ];
   };
+
+  security.sudo.extraRules = [
+    {
+      users = [ username ];
+      commands = [
+        {
+          command = "/run/current-system/sw/bin/nixos-rebuild";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
 
   home-manager.users.${username} = {
     wayland.windowManager.hyprland.settings.monitor = [

@@ -21,7 +21,7 @@
     bitwise                           # cli tool for bit / hex manipulation
     broot                             # tree files view
     caligula                          # User-friendly, lightweight TUI for disk imaging
-    # huggingface-cli                  # not in nixpkgs; use: pip install huggingface_hub
+    python3Packages.huggingface-hub    # HuggingFace CLI (hf)
     hyperfine                         # benchmarking tool
     just                              # command runner (makefile like)
     pastel                            # cli to manipulate colors

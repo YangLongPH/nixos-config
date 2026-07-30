@@ -40,5 +40,8 @@
     ## Level editor
     ldtk
     tiled
+
+    ## 3D
+    blender
   ];
 }
