@@ -7,15 +7,14 @@
 
   powerManagement.cpuFreqGovernor = "performance";
 
-  # rtl8821cu (out-of-tree) driver dedicated to the USB TP-Link Archer T2U Nano.
-  # The in-tree rtw88_8821cu/rtw88_8821c driver must be blacklisted since it caused
-  # periodic disconnections - the out-of-tree driver is stable (paired with the
-  # powersave/autosuspend fixes below).
-  boot.extraModulePackages = [ config.boot.kernelPackages.rtl8821cu ];
-  # rtl8188ee = internal PCI wifi card, confirmed dead hardware (RF path dead, 0 rx/tx,
-  # scans find zero APs even though driver/firmware load cleanly) - blacklisted so the
-  # kernel stops loading a driver for it; switched permanently to the USB Archer T2U Nano above.
-  boot.blacklistedKernelModules = [ "rtw88_8821cu" "rtw88_8821c" "rtl8188ee" ];
+  # Internal wifi upgraded: dead RTL8188EE physically replaced with Intel AX210
+  # (iwlwifi driver, in-tree, zero extra config needed - just works).
+  #
+  # USB TP-Link Archer T2U Nano kept as spare, currently unplugged. If it's
+  # plugged back in, uncomment below (in-tree rtw88_8821cu/rtw88_8821c caused
+  # periodic disconnections, hence the out-of-tree driver + blacklist):
+  # boot.extraModulePackages = [ config.boot.kernelPackages.rtl8821cu ];
+  # boot.blacklistedKernelModules = [ "rtw88_8821cu" "rtw88_8821c" ];
 
   # Lock metrics via NM (dhcpcd is inactive, NM manages all interfaces)
   system.activationScripts.nmWifiMetric = {
@@ -33,14 +32,12 @@
     "192.168.2.24" = [ "jarvis.goline.vn" ];
   };
   networking.networkmanager.wifi.macAddress = "permanent";
-  # Disable WiFi power management to prevent periodic disconnection on rtl8821cu
-  networking.networkmanager.wifi.powersave = false;
 
-  # Disable USB autosuspend for the TP-Link Archer T2U Nano (RTL8821CU)
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="2357", ATTR{idProduct}=="0120", TEST=="power/control", ATTR{power/control}="on"
-  '';
-
-  # Prevent kernel from suspending the USB WiFi adapter
-  boot.kernelParams = [ "usbcore.autosuspend=-1" ];
+  # Below are workarounds specific to the USB Archer T2U Nano (RTL8821CU);
+  # not needed for the Intel AX210. Re-enable if the dongle is plugged back in.
+  # networking.networkmanager.wifi.powersave = false;  # prevent periodic disconnection on rtl8821cu
+  # services.udev.extraRules = ''
+  #   ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="2357", ATTR{idProduct}=="0120", TEST=="power/control", ATTR{power/control}="on"
+  # '';
+  # boot.kernelParams = [ "usbcore.autosuspend=-1" ];
 }
