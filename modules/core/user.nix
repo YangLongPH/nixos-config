@@ -29,6 +29,9 @@
       "wheel"
     ];
     shell = pkgs.zsh;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIASBcx92Ob43JxswE+mQVTrPtP5RrKDZExkgA9KeRNQX nguyendang11@example.com"
+    ];
   };
   nix.settings.allowed-users = [ "${username}" ];
 }

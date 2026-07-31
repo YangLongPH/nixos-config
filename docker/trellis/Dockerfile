@@ -20,40 +20,50 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-RUN git clone --recurse-submodules https://github.com/ByteDance/Hi3DGen.git .
+RUN git clone --recurse-submodules https://github.com/microsoft/TRELLIS.git .
 
+# PyTorch with CUDA 12.4
 RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 
+# spconv — sparse convolution (TRELLIS core dependency)
 RUN pip install --no-cache-dir spconv-cu124
 
-RUN pip install --no-cache-dir xformers --index-url https://download.pytorch.org/whl/cu124
-
+# TRELLIS dependencies
 RUN pip install --no-cache-dir \
-    "diffusers>=0.28.0" \
-    "kornia==0.8.0" \
-    "timm==0.6.7" \
-    "transformers==4.46.3" \
-    accelerate pillow tqdm scipy trimesh
+    pillow imageio imageio-ffmpeg tqdm easydict \
+    opencv-python-headless scipy ninja \
+    trimesh xatlas pymeshlab \
+    transformers diffusers accelerate \
+    huggingface_hub einops omegaconf \
+    plyfile jaxtyping
 
-RUN pip install --no-cache-dir \
-    einops omegaconf easydict plyfile \
-    huggingface_hub xatlas imageio imageio-ffmpeg
-
+# flash-attn for attention (optional but faster)
 RUN pip install --no-cache-dir flash-attn --no-build-isolation || \
-    pip install --no-cache-dir xformers --index-url https://download.pytorch.org/whl/cu124
+    pip install --no-cache-dir xformers
 
+# nvdiffrast — differentiable rasterizer (TRELLIS texture baking)
 RUN pip install --no-cache-dir git+https://github.com/NVlabs/nvdiffrast.git --no-build-isolation
 
+# utils3d — copy module directly (moderngl dep breaks pip install in headless env)
 RUN git clone -q https://github.com/EasternJournalist/utils3d.git /tmp/utils3d_src \
     && cp -r /tmp/utils3d_src/utils3d /usr/local/lib/python3.10/dist-packages/ \
     && rm -rf /tmp/utils3d_src
 
+# kaolin for sparse operations
+RUN pip install --no-cache-dir kaolin -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.4.0_cu124.html || \
+    echo "kaolin install skipped"
+
+# rembg for background removal
+RUN pip install --no-cache-dir "rembg[cpu]"
+
+# open3d for 3D processing
 RUN pip install --no-cache-dir open3d
 
+# API server
 RUN pip install --no-cache-dir fastapi "uvicorn[standard]" python-multipart
 
 COPY server.py .
 
-EXPOSE 8096
+EXPOSE 8097
 
 CMD ["python3", "server.py"]

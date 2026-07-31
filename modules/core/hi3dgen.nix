@@ -7,6 +7,8 @@ in
     description = "Hi3DGen 3D Generation API Server";
     after = [ "docker.service" "network-online.target" ];
     requires = [ "docker.service" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
 
     serviceConfig = {
       Type = "exec";
@@ -19,7 +21,7 @@ in
       ExecStart = ''
         ${pkgs.docker}/bin/docker run \
           --name hi3dgen-api \
-          --device=nvidia.com/gpu=all \
+          --device /dev/nvidia0 --device /dev/nvidiactl --device /dev/nvidia-uvm \
           -p 8096:8096 \
           -v ${modelsDir}:/root/.cache/huggingface \
           -e HUGGINGFACE_HUB_CACHE=/root/.cache/huggingface \

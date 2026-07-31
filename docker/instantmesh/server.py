@@ -35,6 +35,7 @@ async def lifespan(app: FastAPI):
         "sudo-ai/zero123plus-v1.2",
         custom_pipeline="zero123plus",
         torch_dtype=torch.float16,
+        trust_remote_code=True,
     ).to("cuda")
     multiview_pipe.scheduler = EulerAncestralDiscreteScheduler.from_config(
         multiview_pipe.scheduler.config, timestep_spacing="trailing"

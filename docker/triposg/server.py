@@ -67,6 +67,7 @@ async def generate(
     guidance_scale: float = Query(default=7.0, ge=0.0),
     seed: int = Query(default=42),
     faces: int = Query(default=-1),
+    octree_depth: int = Query(default=8, ge=6, le=10),
 ):
     if pipe is None:
         raise HTTPException(status_code=503, detail="Model not loaded")
@@ -74,6 +75,7 @@ async def generate(
     image_data = await file.read()
 
     async with inference_lock:
+        torch.cuda.empty_cache()
         with tempfile.TemporaryDirectory() as tmp_dir:
             img_path = os.path.join(tmp_dir, "input.png")
             with open(img_path, "wb") as f:
@@ -87,6 +89,9 @@ async def generate(
                     generator=torch.Generator(device=pipe.device).manual_seed(seed),
                     num_inference_steps=num_inference_steps,
                     guidance_scale=guidance_scale,
+                    flash_octree_depth=octree_depth,
+                    dense_octree_depth=max(6, octree_depth - 1),
+                    hierarchical_octree_depth=octree_depth,
                 ).samples[0]
 
             mesh = trimesh.Trimesh(outputs[0].astype(np.float32), np.ascontiguousarray(outputs[1]))

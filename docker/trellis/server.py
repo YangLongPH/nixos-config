@@ -2,10 +2,8 @@ import asyncio
 import os
 import tempfile
 from contextlib import asynccontextmanager
-from typing import Optional
 
 import torch
-import trimesh
 import uvicorn
 from fastapi import FastAPI, File, HTTPException, Query, UploadFile
 from fastapi.responses import Response
@@ -13,8 +11,7 @@ from huggingface_hub import snapshot_download
 from PIL import Image
 
 CACHE_DIR = os.environ.get("HUGGINGFACE_HUB_CACHE", "/root/.cache/huggingface")
-MODEL_REPO = "tencent/Hunyuan3D-2"
-MODEL_SUBDIR = "hunyuan3d-dit-v2-0"
+MODEL_REPO = "JeffreyXiang/TRELLIS-image-large"
 
 pipe = None
 inference_lock = asyncio.Lock()
@@ -23,22 +20,20 @@ inference_lock = asyncio.Lock()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global pipe
-    from hy3dgen.shapegen import Hunyuan3DDiTFlowMatchingPipeline
+    import sys
+    sys.path.insert(0, "/app")
+    os.environ["ATTN_BACKEND"] = "flash-attn"
+    os.environ["SPCONV_ALGO"] = "native"
 
-    model_path = snapshot_download(
-        repo_id=MODEL_REPO,
-        local_dir=os.path.join(CACHE_DIR, "Hunyuan3D-2"),
-        allow_patterns=["hunyuan3d-dit-v2-0/**", "config.json", "LICENSE", "NOTICE"],
-    )
-    pipe = Hunyuan3DDiTFlowMatchingPipeline.from_pretrained(
-        model_path,
-        subfolder=MODEL_SUBDIR,
-        use_safetensors=True,
-    ).to("cuda")
+    from trellis.pipelines import TrellisImageTo3DPipeline
+
+    model_dir = snapshot_download(repo_id=MODEL_REPO, local_dir=os.path.join(CACHE_DIR, "TRELLIS"))
+    pipe = TrellisImageTo3DPipeline.from_pretrained(model_dir)
+    pipe.cuda()
     yield
 
 
-app = FastAPI(title="Hunyuan3D API", version="1.0.0", lifespan=lifespan)
+app = FastAPI(title="TRELLIS API", version="1.0.0", lifespan=lifespan)
 
 
 @app.get("/health")
@@ -52,6 +47,8 @@ async def generate(
     num_inference_steps: int = Query(default=50, ge=1, le=200),
     guidance_scale: float = Query(default=7.5, ge=0.0),
     seed: int = Query(default=42),
+    texture_size: int = Query(default=1024, ge=512, le=2048),
+    simplify: float = Query(default=0.95, ge=0.0, le=1.0),
 ):
     if pipe is None:
         raise HTTPException(status_code=503, detail="Model not loaded")
@@ -59,6 +56,7 @@ async def generate(
     image_data = await file.read()
 
     async with inference_lock:
+        torch.cuda.empty_cache()
         with tempfile.TemporaryDirectory() as tmp_dir:
             img_path = os.path.join(tmp_dir, "input.png")
             with open(img_path, "wb") as f:
@@ -66,18 +64,25 @@ async def generate(
 
             image = Image.open(img_path).convert("RGBA")
 
-            generator = torch.Generator(device="cuda").manual_seed(seed)
             with torch.no_grad():
-                outputs = pipe(
-                    image=image,
+                outputs = pipe.run(
+                    image,
+                    seed=seed,
                     num_inference_steps=num_inference_steps,
                     guidance_scale=guidance_scale,
-                    generator=generator,
                 )
 
-            mesh = outputs.meshes[0]
+            from trellis.utils import postprocessing_utils
+            glb = postprocessing_utils.to_glb(
+                outputs["gaussian"][0],
+                outputs["mesh"][0],
+                simplify=simplify,
+                texture_size=texture_size,
+                verbose=False,
+            )
+
             output_path = os.path.join(tmp_dir, "output.glb")
-            mesh.export(output_path)
+            glb.export(output_path)
             with open(output_path, "rb") as f:
                 glb_bytes = f.read()
 
@@ -89,4 +94,4 @@ async def generate(
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8094)
+    uvicorn.run(app, host="0.0.0.0", port=8097)

@@ -7,6 +7,8 @@ in
     description = "TripoSG 3D Generation API Server";
     after = [ "docker.service" "network-online.target" ];
     requires = [ "docker.service" ];
+    wants = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
 
     serviceConfig = {
       Type = "exec";
