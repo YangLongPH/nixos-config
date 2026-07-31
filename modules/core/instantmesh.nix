@@ -1,10 +1,10 @@
 { pkgs, ... }:
 let
-  modelsDir = "/var/lib/trellis";
+  modelsDir = "/var/lib/instantmesh";
 in
 {
-  systemd.services.trellis-api = {
-    description = "TRELLIS 3D Generation API Server";
+  systemd.services.instantmesh-api = {
+    description = "InstantMesh 3D Generation API Server";
     after = [ "docker.service" "network-online.target" ];
     requires = [ "docker.service" ];
 
@@ -13,19 +13,19 @@ in
       Restart = "on-failure";
       RestartSec = "10s";
       ExecStartPre = [
-        "-${pkgs.docker}/bin/docker stop trellis-api"
-        "-${pkgs.docker}/bin/docker rm trellis-api"
+        "-${pkgs.docker}/bin/docker stop instantmesh-api"
+        "-${pkgs.docker}/bin/docker rm instantmesh-api"
       ];
       ExecStart = ''
         ${pkgs.docker}/bin/docker run \
-          --name trellis-api \
+          --name instantmesh-api \
           --device=nvidia.com/gpu=all \
-          -p 8092:8092 \
+          -p 8095:8095 \
           -v ${modelsDir}:/root/.cache/huggingface \
           -e HUGGINGFACE_HUB_CACHE=/root/.cache/huggingface \
-          trellis-api
+          instantmesh-api
       '';
-      ExecStop = "${pkgs.docker}/bin/docker stop trellis-api";
+      ExecStop = "${pkgs.docker}/bin/docker stop instantmesh-api";
     };
   };
 
