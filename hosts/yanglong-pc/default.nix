@@ -39,8 +39,6 @@
     ./../../modules/core/trellis.nix
     ./../../modules/core/triposg.nix
     ./../../modules/core/hunyuan3d.nix
-    ./../../modules/core/instantmesh.nix
-    ./../../modules/core/hi3dgen.nix
   ];
 
   powerManagement.cpuFreqGovernor = "performance";
