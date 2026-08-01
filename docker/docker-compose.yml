@@ -1,0 +1,62 @@
+services:
+  trellis-api:
+    build: ./trellis
+    image: trellis-api
+    restart: unless-stopped
+    ports:
+      - "8097:8097"
+    volumes:
+      - /var/lib/trellis:/root/.cache/huggingface
+      - /var/lib/trellis-torch:/root/.cache/torch
+      - ./trellis/server.py:/app/server.py
+      - ./trellis/patches/trellis/modules/sparse/__init__.py:/app/trellis/modules/sparse/__init__.py
+      - ./trellis/patches/trellis/modules/sparse/attention/full_attn.py:/app/trellis/modules/sparse/attention/full_attn.py
+      - ./trellis/patches/trellis/modules/sparse/attention/serialized_attn.py:/app/trellis/modules/sparse/attention/serialized_attn.py
+      - ./trellis/patches/trellis/modules/sparse/attention/windowed_attn.py:/app/trellis/modules/sparse/attention/windowed_attn.py
+    environment:
+      - HUGGINGFACE_HUB_CACHE=/root/.cache/huggingface
+      - ATTN_BACKEND=sdpa
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  hunyuan3d-api:
+    build: ./hunyuan3d
+    image: hunyuan3d-api
+    restart: unless-stopped
+    ports:
+      - "8094:8094"
+    volumes:
+      - /var/lib/hunyuan3d:/root/.cache/huggingface
+      - ./hunyuan3d/server.py:/app/server.py
+    environment:
+      - HUGGINGFACE_HUB_CACHE=/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  triposg-api:
+    build: ./triposg
+    image: triposg-api
+    restart: unless-stopped
+    ports:
+      - "8093:8093"
+    volumes:
+      - /var/lib/triposg:/app/pretrained_weights
+    environment:
+      - PRETRAINED_WEIGHTS_PATH=/app/pretrained_weights
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
