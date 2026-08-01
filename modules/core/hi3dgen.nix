@@ -21,10 +21,11 @@ in
       ExecStart = ''
         ${pkgs.docker}/bin/docker run \
           --name hi3dgen-api \
-          --device /dev/nvidia0 --device /dev/nvidiactl --device /dev/nvidia-uvm \
+          --device=nvidia.com/gpu=all \
           -p 8096:8096 \
           -v ${modelsDir}:/root/.cache/huggingface \
           -e HUGGINGFACE_HUB_CACHE=/root/.cache/huggingface \
+          -v /home/yanglong/work/github/YangLongPH/nixos-config/docker/hi3dgen/server.py:/app/server.py \
           hi3dgen-api
       '';
       ExecStop = "${pkgs.docker}/bin/docker stop hi3dgen-api";

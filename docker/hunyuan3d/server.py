@@ -2,18 +2,14 @@ import asyncio
 import os
 import tempfile
 from contextlib import asynccontextmanager
-from typing import Optional
 
 import torch
-import trimesh
 import uvicorn
 from fastapi import FastAPI, File, HTTPException, Query, UploadFile
 from fastapi.responses import Response
-from huggingface_hub import snapshot_download
 from PIL import Image
 
 CACHE_DIR = os.environ.get("HUGGINGFACE_HUB_CACHE", "/root/.cache/huggingface")
-MODEL_REPO = "tencent/Hunyuan3D-2"
 MODEL_SUBDIR = "hunyuan3d-dit-v2-0"
 
 pipe = None
@@ -25,16 +21,13 @@ async def lifespan(app: FastAPI):
     global pipe
     from hy3dgen.shapegen import Hunyuan3DDiTFlowMatchingPipeline
 
-    model_path = snapshot_download(
-        repo_id=MODEL_REPO,
-        local_dir=os.path.join(CACHE_DIR, "Hunyuan3D-2"),
-        allow_patterns=["hunyuan3d-dit-v2-0/**", "config.json", "LICENSE", "NOTICE"],
-    )
+    model_path = os.path.join(CACHE_DIR, "Hunyuan3D-2")
     pipe = Hunyuan3DDiTFlowMatchingPipeline.from_pretrained(
         model_path,
         subfolder=MODEL_SUBDIR,
         use_safetensors=True,
-    ).to("cuda")
+    )
+    pipe.to("cuda")
     yield
 
 
@@ -75,7 +68,7 @@ async def generate(
                     generator=generator,
                 )
 
-            mesh = outputs.meshes[0]
+            mesh = outputs[0]
             output_path = os.path.join(tmp_dir, "output.glb")
             mesh.export(output_path)
             with open(output_path, "rb") as f:

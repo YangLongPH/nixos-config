@@ -1,6 +1,7 @@
 { pkgs, ... }:
 let
   modelsDir = "/var/lib/trellis";
+  patchDir = "/home/yanglong/work/github/YangLongPH/nixos-config/docker/trellis/patches";
 in
 {
   systemd.services.trellis-api = {
@@ -18,15 +19,21 @@ in
         "-${pkgs.docker}/bin/docker stop trellis-api"
         "-${pkgs.docker}/bin/docker rm trellis-api"
       ];
-      ExecStart = ''
+      ExecStart = 
         ${pkgs.docker}/bin/docker run \
           --name trellis-api \
-          --device /dev/nvidia0 --device /dev/nvidiactl --device /dev/nvidia-uvm \
+          --device=nvidia.com/gpu=all \
           -p 8097:8097 \
           -v ${modelsDir}:/root/.cache/huggingface \
           -e HUGGINGFACE_HUB_CACHE=/root/.cache/huggingface \
+          -e ATTN_BACKEND=sdpa \
+          -v /home/yanglong/work/github/YangLongPH/nixos-config/docker/trellis/server.py:/app/server.py \
+          -v ${patchDir}/trellis/modules/sparse/__init__.py:/app/trellis/modules/sparse/__init__.py \
+          -v ${patchDir}/trellis/modules/sparse/attention/full_attn.py:/app/trellis/modules/sparse/attention/full_attn.py \
+          -v ${patchDir}/trellis/modules/sparse/attention/serialized_attn.py:/app/trellis/modules/sparse/attention/serialized_attn.py \
+          -v ${patchDir}/trellis/modules/sparse/attention/windowed_attn.py:/app/trellis/modules/sparse/attention/windowed_attn.py \
           trellis-api
-      '';
+      ;
       ExecStop = "${pkgs.docker}/bin/docker stop trellis-api";
     };
   };
