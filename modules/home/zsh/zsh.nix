@@ -202,6 +202,130 @@
         zle -N zle-line-finish
       fi
 
+      # rtlog <ticket> [comment] [activity_id]
+      # Log time to Redmine manually — same logic as post-commit hook.
+      # Uses ~/.git-hooks/redmine-logtime.conf + secrets for config.
+      rtlog() {
+        local TICKET="''${1#\#}"
+        if [[ -z "$TICKET" ]]; then
+          echo "Usage: rtlog <ticket> [comment] [activity_id]" >&2
+          return 1
+        fi
+
+        local HOOK_DIR="$HOME/.git-hooks"
+        local CONF="$HOOK_DIR/redmine-logtime.conf"
+        local LOG="$HOOK_DIR/logtime.log"
+
+        local REDMINE_URL="https://pm2.goline.vn"
+        local REDMINE_API_KEY=""
+        local WORK_START="08:00"
+        local WORK_END="18:00"
+        local LUNCH_START="11:30"
+        local LUNCH_END="13:00"
+        local ACTIVITY_ID=9
+        local MIN_MINUTES=15
+
+        [[ -f "$CONF" ]]             && source "$CONF"
+        [[ -f "$HOOK_DIR/secrets" ]] && source "$HOOK_DIR/secrets"
+
+        if [[ -z "$REDMINE_API_KEY" ]]; then
+          echo "[redmine-logtime] ✗ REDMINE_API_KEY chưa set trong $HOOK_DIR/secrets" >&2
+          return 1
+        fi
+
+        local COMMENT="''${2:-}"
+        [[ -n "$3" ]] && ACTIVITY_ID="$3"
+
+        local today now_ts now_hm
+        today=$(date +%Y-%m-%d)
+        now_ts=$(date +%s)
+        now_hm=$(date +%H:%M)
+
+        local work_start_ts work_end_ts lunch_start_ts lunch_end_ts
+        work_start_ts=$(date -d "$today ''${WORK_START}:00" +%s)
+        work_end_ts=$(date -d "$today ''${WORK_END}:00" +%s)
+        lunch_start_ts=$(date -d "$today ''${LUNCH_START}:00" +%s)
+        lunch_end_ts=$(date -d "$today ''${LUNCH_END}:00" +%s)
+
+        local last_created start_ts
+        last_created=$(curl -sf \
+          -H "X-Redmine-API-Key: $REDMINE_API_KEY" \
+          "$REDMINE_URL/time_entries.json?user_id=me&spent_on=$today&limit=100" \
+          2>/dev/null \
+          | jq -r '[.time_entries[].created_on] | max // empty')
+
+        if [[ -n "$last_created" ]]; then
+          start_ts=$(date -d "$last_created" +%s)
+        else
+          (( now_ts < work_start_ts )) && start_ts=$now_ts || start_ts=$work_start_ts
+        fi
+
+        if (( start_ts >= lunch_start_ts && start_ts < lunch_end_ts )); then
+          start_ts=$lunch_end_ts
+        fi
+
+        local start_hm
+        start_hm=$(date -d "@$start_ts" +%H:%M)
+
+        local total_secs
+        total_secs=$(( now_ts - start_ts ))
+        (( total_secs < 0 )) && total_secs=0
+
+        local ov_s ov_e
+        ov_s=$(( start_ts > lunch_start_ts ? start_ts : lunch_start_ts ))
+        ov_e=$(( now_ts   < lunch_end_ts   ? now_ts   : lunch_end_ts   ))
+        (( ov_e > ov_s )) && total_secs=$(( total_secs - (ov_e - ov_s) ))
+
+        local total_minutes=$(( total_secs / 60 ))
+
+        if (( total_minutes < MIN_MINUTES )); then
+          local hours_fmt min_fmt
+          hours_fmt=$(awk "BEGIN { printf \"%.2f\", $total_secs / 3600 }")
+          min_fmt=$(awk "BEGIN { printf \"%.2f\", $MIN_MINUTES / 60 }")
+          echo "[redmine-logtime] [''${start_hm}→''${now_hm}] #$TICKET: ''${hours_fmt}h < ''${min_fmt}h min, bỏ qua"
+          return 0
+        fi
+
+        local quarters=$(( (total_minutes + 14) / 15 ))
+        local hours=$(awk "BEGIN { printf \"%.2f\", $quarters * 0.25 }")
+
+        (( now_ts > work_end_ts )) && \
+          echo "[redmine-logtime] ⚠️  ngoài giờ (''${now_hm} > $WORK_END): vẫn log ''${hours}h"
+
+        [[ -z "$COMMENT" ]] && COMMENT="manual log"
+        local comment_api
+        comment_api="[''${start_hm}→''${now_hm}] $(echo "$COMMENT" | head -c 230 | sed 's/\\/\\\\/g; s/"/\\"/g')"
+
+        local resp_file http_code
+        resp_file=$(mktemp)
+
+        http_code=$(curl -s \
+          -o "$resp_file" \
+          -w "%{http_code}" \
+          -X POST \
+          -H "Content-Type: application/json" \
+          -H "X-Redmine-API-Key: $REDMINE_API_KEY" \
+          -d "{\"time_entry\":{\"issue_id\":$TICKET,\"spent_on\":\"$today\",\"hours\":$hours,\"activity_id\":$ACTIVITY_ID,\"comments\":\"$comment_api\"}}" \
+          "$REDMINE_URL/time_entries.json" 2>/dev/null)
+
+        if [[ "$http_code" == "201" ]]; then
+          local entry_id
+          entry_id=$(jq -r '.time_entry.id' "$resp_file" 2>/dev/null)
+          echo "[redmine-logtime] [''${start_hm}→''${now_hm}] ✓ #$TICKET: ''${hours}h logged"
+          printf '{"ts":"%s","ticket":%s,"from":"%s","to":"%s","hours":%s,"entry_id":%s,"status":"ok","comment":"%s"}\n' \
+            "$(date -Iseconds)" "$TICKET" "$start_hm" "$now_hm" "$hours" "''${entry_id:-null}" "$comment_api" >> "$LOG"
+        else
+          local body
+          body=$(cat "$resp_file")
+          echo "[redmine-logtime] ✗ #$TICKET: HTTP $http_code — $body" >&2
+          printf '{"ts":"%s","ticket":%s,"from":"%s","to":"%s","hours":%s,"status":"http_%s","error":"%s"}\n' \
+            "$(date -Iseconds)" "$TICKET" "$start_hm" "$now_hm" "$hours" "$http_code" \
+            "$(echo "$body" | sed 's/"/\\"/g')" >> "$LOG"
+        fi
+
+        rm -f "$resp_file"
+      }
+
       redmine-time() {
         local from=''${1:-$(date -d "$(date +%Y-%m-%d) - $(( $(date +%u) - 1 )) days" +%Y-%m-%d)}
         local to=''${2:-$(date -d "$(date +%Y-%m-%d) + $(( 7 - $(date +%u) )) days" +%Y-%m-%d)}
