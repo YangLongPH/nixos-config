@@ -1,5 +1,9 @@
 { pkgs, host, config, ... }:
 {
+  # Prevent deadlock during nixos-rebuild switch: switch-to-configuration stops NM
+  # then blocks waiting for network-online.target → NM-wait-online → NM (already stopped).
+  systemd.services.NetworkManager-wait-online.enable = false;
+
   networking = {
     hostName = "${host}";
     networkmanager.enable = true;
