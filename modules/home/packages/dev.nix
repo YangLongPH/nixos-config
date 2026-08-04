@@ -60,5 +60,8 @@
 
     ## AWS
     awscli2
+
+    ## GCP
+    google-cloud-sdk
   ];
 }
