@@ -186,6 +186,51 @@ in
     '';
   };
 
+  home.file.".git-hooks/commit-msg" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+      # commit-msg: validate commit message pattern trước khi commit được tạo.
+      #
+      # Pattern: <type>(<scope>): [#<ticket>] <mô tả ngắn>
+      # Types:   feat | fix | refactor | chore | test | docs
+      #
+      # Bỏ qua: merge commits, fixup/squash commits.
+
+      MSG_FILE="$1"
+      MSG=$(cat "$MSG_FILE")
+
+      # Bỏ qua merge commits
+      [[ "$MSG" =~ ^Merge\ (branch|tag|remote-tracking) ]] && exit 0
+
+      # Bỏ qua fixup!/squash! (git rebase -i)
+      [[ "$MSG" =~ ^(fixup|squash)! ]] && exit 0
+
+      PATTERN='^(feat|fix|refactor|chore|test|docs)\([^)]+\): \[#[0-9]+\] .+'
+
+      if ! echo "$MSG" | head -1 | grep -qE "$PATTERN"; then
+        echo "" >&2
+        echo "  ✗ Invalid commit message format!" >&2
+        echo "" >&2
+        echo "  Required pattern:" >&2
+        echo "    <type>(<scope>): [#<ticket>] <short description>" >&2
+        echo "" >&2
+        echo "  Types: feat | fix | refactor | chore | test | docs" >&2
+        echo "" >&2
+        echo "  Examples:" >&2
+        echo "    feat(pool): [#82216] proactive detect login_expired" >&2
+        echo "    fix(board): [#79500] default status=latest when fetching jobs" >&2
+        echo "" >&2
+        echo "  Your message:" >&2
+        echo "    $(head -1 "$MSG_FILE")" >&2
+        echo "" >&2
+        exit 1
+      fi
+
+      exit 0
+    '';
+  };
+
   home.file.".git-hooks/redmine-logtime.conf".text = ''
     # redmine-logtime.conf — config defaults, managed by Nix (đừng sửa trực tiếp)
     # Để override REDMINE_API_KEY và các biến khác: tạo ~/.git-hooks/secrets
