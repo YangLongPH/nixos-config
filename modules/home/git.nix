@@ -166,7 +166,7 @@ in
         -X POST \
         -H "Content-Type: application/json" \
         -H "X-Redmine-API-Key: $REDMINE_API_KEY" \
-        -d "{\"time_entry\":{\"issue_id\":$TICKET,\"spent_on\":\"$today\",\"hours\":$hours,\"activity_id\":$ACTIVITY_ID,\"comments\":\"$COMMENT\"}}" \
+        -d "{\"time_entry\":{\"issue_id\":$TICKET,\"spent_on\":\"$today\",\"hours\":$hours,\"activity_id\":$ACTIVITY_ID,\"comments\":\"$COMMENT\",\"custom_fields\":[{\"id\":54,\"value\":\"Co\"}]}}" \
         "$REDMINE_URL/time_entries.json" 2>/dev/null)
 
       if [[ "$http_code" == "201" ]]; then
