@@ -326,6 +326,55 @@
         rm -f "$resp_file"
       }
 
+      _WIRED_PROXY_URL="http://10.10.1.90:3128/"
+      _WIRED_NO_PROXY="localhost,127.0.0.1,192.168.1.*,10.10.*,.goline,*.goline.vn"
+
+      # Sync proxy env vào terminal hiện tại dựa theo flag file do NM dispatcher tạo.
+      _proxy_sync() {
+        local flag="$HOME/.cache/wired-proxy-active"
+        if [[ -f $flag && -z $HTTPS_PROXY ]]; then
+          export HTTP_PROXY="$_WIRED_PROXY_URL"
+          export HTTPS_PROXY="$_WIRED_PROXY_URL"
+          export NO_PROXY="$_WIRED_NO_PROXY"
+          export http_proxy="$_WIRED_PROXY_URL"
+          export https_proxy="$_WIRED_PROXY_URL"
+          export no_proxy="$_WIRED_NO_PROXY"
+        elif [[ ! -f $flag && -n $HTTPS_PROXY ]]; then
+          unset HTTP_PROXY HTTPS_PROXY NO_PROXY http_proxy https_proxy no_proxy
+        fi
+      }
+      precmd_functions+=(_proxy_sync)
+
+      # Manual toggle — shell env + Hyprland env (GUI apps) + flag file (precmd).
+      proxy-on() {
+        export HTTP_PROXY="$_WIRED_PROXY_URL"
+        export HTTPS_PROXY="$_WIRED_PROXY_URL"
+        export NO_PROXY="$_WIRED_NO_PROXY"
+        export http_proxy="$_WIRED_PROXY_URL"
+        export https_proxy="$_WIRED_PROXY_URL"
+        export no_proxy="$_WIRED_NO_PROXY"
+        hyprctl keyword env "HTTP_PROXY,$_WIRED_PROXY_URL"
+        hyprctl keyword env "HTTPS_PROXY,$_WIRED_PROXY_URL"
+        hyprctl keyword env "http_proxy,$_WIRED_PROXY_URL"
+        hyprctl keyword env "https_proxy,$_WIRED_PROXY_URL"
+        hyprctl keyword env "NO_PROXY,$_WIRED_NO_PROXY"
+        hyprctl keyword env "no_proxy,$_WIRED_NO_PROXY"
+        touch ~/.cache/wired-proxy-active
+        echo "Proxy ON → $_WIRED_PROXY_URL"
+      }
+
+      proxy-off() {
+        unset HTTP_PROXY HTTPS_PROXY NO_PROXY http_proxy https_proxy no_proxy
+        hyprctl keyword unsetenv HTTP_PROXY
+        hyprctl keyword unsetenv HTTPS_PROXY
+        hyprctl keyword unsetenv http_proxy
+        hyprctl keyword unsetenv https_proxy
+        hyprctl keyword unsetenv NO_PROXY
+        hyprctl keyword unsetenv no_proxy
+        rm -f ~/.cache/wired-proxy-active
+        echo "Proxy OFF"
+      }
+
       redmine-time() {
         local from=''${1:-$(date -d "$(date +%Y-%m-%d) - $(( $(date +%u) - 1 )) days" +%Y-%m-%d)}
         local to=''${2:-$(date -d "$(date +%Y-%m-%d) + $(( 7 - $(date +%u) )) days" +%Y-%m-%d)}
