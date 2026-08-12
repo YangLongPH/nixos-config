@@ -21,7 +21,8 @@
     ./wayland.nix
     ./virtualization.nix
     # ./qmk.nix
-    ./piper.nix
+    # ./piper.nix  # replaced by logiops
+    ./logiops.nix
     ./input-method.nix
     # ./excalidraw.nix
   ];

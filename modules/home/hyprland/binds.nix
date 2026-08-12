@@ -74,6 +74,9 @@
 
       "CTRL ALT, up, exec, hyprctl dispatch focuswindow floating && hyprctl dispatch bringactivetotop"
       "CTRL ALT, down, exec, hyprctl dispatch focuswindow tiled"
+      # MX Master 3 gesture button — Left/Right swipe
+      "CTRL ALT, left, workspace, e-1"
+      "CTRL ALT, right, workspace, e+1"
 
       # switch workspace
       "$mod, 1, workspace, 1"
