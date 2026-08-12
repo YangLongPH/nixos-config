@@ -19,6 +19,30 @@
           };
           buttons = [
             {
+              # Back button — CID 0x53 = 83
+              cid = 83;
+              action = {
+                type = "Keypress";
+                keys = [ "KEY_PAGEDOWN" ];
+              };
+            }
+            {
+              # Forward button — CID 0x56 = 86
+              cid = 86;
+              action = {
+                type = "Keypress";
+                keys = [ "KEY_PAGEUP" ];
+              };
+            }
+            {
+              # Shift wheel button — CID 0xc4 = 196
+              cid = 196;
+              action = {
+                type = "Keypress";
+                keys = [ "KEY_RIGHT" ];
+              };
+            }
+            {
               # Gesture button (dưới scroll wheel) — CID 0xc3 = 195
               cid = 195;
               action = {
@@ -53,7 +77,7 @@
                     mode = "OnRelease";
                     action = {
                       type = "Keypress";
-                      keys = [ "KEY_LEFTCTRL" "KEY_LEFTALT" "KEY_UP" ];
+                      keys = [ "KEY_LEFTCTRL" "KEY_LEFTSHIFT" "KEY_T" ];
                     };
                   }
                   {
@@ -61,7 +85,7 @@
                     mode = "OnRelease";
                     action = {
                       type = "Keypress";
-                      keys = [ "KEY_LEFTCTRL" "KEY_LEFTALT" "KEY_DOWN" ];
+                      keys = [ "KEY_LEFTCTRL" "KEY_LEFTSHIFT" "KEY_W" ];
                     };
                   }
                 ];
