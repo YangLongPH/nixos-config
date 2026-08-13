@@ -16,6 +16,10 @@
     # virtio-win
     win-spice
     adwaita-icon-theme
+    # Ansible + VM test tooling
+    ansible
+    sshpass
+    cloud-utils  # cung cấp cloud-localds để tạo cloud-init seed ISO
   ];
 
   # Manage the virtualisation services
