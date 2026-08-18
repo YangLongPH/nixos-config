@@ -179,9 +179,9 @@ in
       on-click = "power-menu";
     };
     "custom/mouse-battery" = {
-      exec = "bash -c 'CAP=/sys/class/power_supply/hidpp_battery_9/capacity; STATUS=/sys/class/power_supply/hidpp_battery_9/status; if [ -f \"$CAP\" ]; then pct=$(cat $CAP); st=$(cat $STATUS 2>/dev/null || echo Unknown); echo \"$pct% ($st)\"; else echo \"zz\"; fi'";
+      exec = "bash -c 'DEV=$(ls /sys/class/power_supply/ 2>/dev/null | grep hidpp_battery | head -1); [ -z \"$DEV\" ] && exit; pct=$(cat /sys/class/power_supply/$DEV/capacity); icons=(󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹); echo \"\${icons[$((pct/10 > 9 ? 9 : pct/10))]} $pct%\";'";
       interval = 30;
-      format = "<span foreground='${yellow}'> </span>{}";
+      format = "<span foreground='${yellow}'>{}</span>";
       tooltip = true;
       tooltip-format = "MX Master 3S";
     };
