@@ -41,7 +41,7 @@ in
       # "disk"
       "pulseaudio"
       "network"
-      "battery"
+      "custom/mouse-battery"
       "custom/fcitx5"
       "custom/notification"
       "custom/power-menu"
@@ -177,6 +177,13 @@ in
       tooltip-format = "Power menu";
       format = "<span foreground='${red}'> </span>";
       on-click = "power-menu";
+    };
+    "custom/mouse-battery" = {
+      exec = "bash -c 'CAP=/sys/class/power_supply/hidpp_battery_9/capacity; STATUS=/sys/class/power_supply/hidpp_battery_9/status; if [ -f \"$CAP\" ]; then pct=$(cat $CAP); st=$(cat $STATUS 2>/dev/null || echo Unknown); echo \"$pct% ($st)\"; else echo \"zz\"; fi'";
+      interval = 30;
+      format = "<span foreground='${yellow}'> </span>{}";
+      tooltip = true;
+      tooltip-format = "MX Master 3S";
     };
     "custom/watson" = {
       exec = "$HOME/.local/bin/watson-waybar";
