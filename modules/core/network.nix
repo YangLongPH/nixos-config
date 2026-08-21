@@ -11,7 +11,7 @@
     hosts = {
       "10.10.1.24" = [ "vtrade-psi.goline.vn" "vapi-psi.goline.vn" "vwss-psi.goline.vn" ];
       "10.10.1.25" = [ "vgapi-psi.goline.vn" ];
-      "10.10.1.26" = [ "vgaia-psi.goline.vn" ];
+      "10.10.1.26" = [ "vgaia-psi.goline.vn" "wiki.goline.vn" "sso.goline.vn" ];
       "10.10.1.27" = [ "vmarket-psi.goline.vn" ];
       "192.168.2.5" = [ "rustdesk.goline.vn" ];
     };
