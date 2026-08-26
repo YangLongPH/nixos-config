@@ -95,6 +95,16 @@
       zle -N my-backward-delete-word
       # bind this new widget to `ctrl+w`
       bindkey '^W' my-backward-delete-word
+
+      # [Alt+R] claude session picker → puts resume command in BUFFER
+      _claude_resume_widget() {
+          local result
+          result=$(claude-sessions --pick --all 2>/dev/tty)
+          [[ -n "$result" ]] && BUFFER="$result" && CURSOR=$#BUFFER
+          zle reset-prompt
+      }
+      zle -N _claude_resume_widget
+      bindkey '^[r' _claude_resume_widget
     '';
   };
 }
