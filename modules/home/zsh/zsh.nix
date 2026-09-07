@@ -158,6 +158,7 @@
       export PATH="$HOME/.local/bin:$PATH"
       export JAVA_HOME="${pkgs.temurin-bin-11}"
       alias jcli='${pkgs.temurin-bin-21}/bin/java -jar ~/.jenkins/jenkins-cli.jar -s http://10.10.1.120:8443/ -ssh -user goline -i ~/.ssh/id_ed25519'
+      alias ssh-copy-id-win='ssh-copy-id -s -i ~/.ssh/id_ed25519.pub -t "/ProgramData/ssh/administrators_authorized_keys"'
 
       setopt hist_verify
 

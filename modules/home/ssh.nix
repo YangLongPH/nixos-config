@@ -49,6 +49,20 @@
         identitiesOnly = true;
         controlMaster = "no";
       };
+
+      psi-215 = {
+        host = "psi-215";
+        hostname = "192.168.1.215";
+        user = "administrator";
+        proxyJump = "goline@10.10.1.132,goline@103.139.12.115";
+      };
+
+      psi-216 = {
+        host = "psi-216";
+        hostname = "192.168.1.216";
+        user = "administrator";
+        proxyJump = "goline@10.10.1.132,goline@103.139.12.115";
+      };
     };
   };
 
