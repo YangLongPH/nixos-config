@@ -6,6 +6,7 @@
     ./bat.nix                         # better cat command
     ./claude.nix                      # claude code AI assistant
     ./browser.nix                     # firefox based browser
+    ./qutebrowser.nix                 # keyboard-driven browser
     ./btop.nix                        # resouces monitor
     # ./cava.nix                        # audio visualizer
     ./direnv.nix
