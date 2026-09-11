@@ -20,6 +20,11 @@
       py = "python";
       ipy = "ipython";
       icat = "kitten icat";
+      ssh = "TERM=xterm-256color ssh";
+      # Windows OpenSSH: admin accounts dung administrators_authorized_keys
+      ssh-copy-id-win = "ssh-copy-id -s -i ~/.ssh/id_ed25519.pub -t \"/ProgramData/ssh/administrators_authorized_keys\"";
+      # Windows OpenSSH: non-admin accounts (sp01, sp02...) dung ~/.ssh/authorized_keys
+      ssh-copy-id-win-user = "ssh-copy-id -s -i ~/.ssh/id_ed25519.pub";
       dsize = "du -hs";
       pdf = "tdf";
       open = "xdg-open";

@@ -40,6 +40,7 @@
     ## Java
     temurin-bin-11
     (lib.lowPrio temurin-bin-21)
+    maven
     jetbrains.idea-oss
 
     ## .NET
