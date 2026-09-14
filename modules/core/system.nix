@@ -29,6 +29,7 @@
     wget
     git
     cifs-utils                         # mount.cifs for SMB/CIFS shares
+    nsis                               # build Windows .exe installer (VGAIA CI/CD)
 # globalprotect-openconnect        # work VPN (portal: 222.252.25.187:10443)
   ];
 
