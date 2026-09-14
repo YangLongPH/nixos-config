@@ -43,6 +43,8 @@
 
   powerManagement.cpuFreqGovernor = "performance";
 
+  services.tailscale.useRoutingFeatures = "client";
+
   # services.calibre-web = {
   #   enable = true;
   #   listen.ip = "0.0.0.0";

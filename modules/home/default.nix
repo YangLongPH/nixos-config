@@ -34,6 +34,7 @@
     ./watson.nix                      # time tracker + Google Drive sync
     ./rofi/rofi.nix                   # launcher
     ./../../scripts/scripts.nix       # personal scripts
+    ./remmina/remmina.nix               # remote desktop (RDP profiles)
     # ./rustdesk.nix                    # remote desktop
     ./slack.nix                       # slack
     ./ssh.nix                         # ssh config

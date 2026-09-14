@@ -7,6 +7,11 @@
 
   powerManagement.cpuFreqGovernor = "performance";
 
+  services.tailscale = {
+    useRoutingFeatures = "server";
+    extraUpFlags = [ "--advertise-routes=10.10.1.0/24" ];
+  };
+
   # Internal wifi upgraded: dead RTL8188EE physically replaced with Intel AX210
   # (iwlwifi driver, in-tree, zero extra config needed - just works).
   #
