@@ -91,7 +91,11 @@
       pkgs.cudaPackages.cudnn
       pkgs.ffmpeg-full
       pkgs.libwebp
-      pkgs.stdenv.cc.cc.lib
+      # KHONG dua pkgs.stdenv.cc.cc.lib vao day nua: no gay LD_LIBRARY_PATH global
+      # nay che mat libstdc++ dung ma Hyprland/hyprctl tu tim qua RPATH rieng
+      # (Hyprland build bang overlay GCC rieng, luon can ban rat moi).
+      # Neu sau nay co tool CUDA/ML can newer libstdc++, scope no rieng cho tool
+      # do thay vi set global o day.
       pkgs.zlib
       "~/.local/lib/ort-gpu"
     ];

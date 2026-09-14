@@ -34,6 +34,13 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
 
+    # glaze 7.9.1: nixpkgs bump glaze 8.0.0 xay ra 03/08, 2 ngay truoc khi
+    # Hyprland v0.56.2 release (05/08). CMakeLists.txt cua Hyprland doi
+    # find_package(glaze 7...<8), nen nixpkgs pin chinh (glaze 8.x) khong
+    # thoa man -> fallback FetchContent (git clone) -> fail trong sandbox.
+    # Pin rieng 1 nixpkgs cu de lay dung glaze 7.9.1, override vao hyprland.
+    nixpkgs-glaze.url = "github:NixOS/nixpkgs/4664e700a0c9d6d855111efd672ecc042095bb7b";
+
     hy3 = {
       url = "github:outfoxxed/hy3";
       inputs.hyprland.follows = "hyprland";
