@@ -91,6 +91,13 @@
         user = "administrator";
         proxyJump = "goline@10.10.1.132,goline@103.139.12.115";
       };
+
+      psi-238 = {
+        host = "psi-238";
+        hostname = "192.168.1.238";
+        user = "administrator";
+        proxyJump = "goline@10.10.1.132,goline@103.139.12.115";
+      };
     };
   };
 
