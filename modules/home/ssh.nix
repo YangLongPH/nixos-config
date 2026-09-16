@@ -47,7 +47,10 @@
         port = 443;
         identityFile = "~/.ssh/id_ed25519_goline";
         identitiesOnly = true;
+        # controlMaster = "no" + controlPath riêng để tránh reuse socket
+        # của github.com (cùng host ssh.github.com:443 nhưng khác account)
         controlMaster = "no";
+        controlPath = "none";
       };
 
       psi-215 = {
