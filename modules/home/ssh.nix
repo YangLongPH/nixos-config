@@ -21,6 +21,12 @@
         userKnownHostsFile = "~/.ssh/known_hosts";
       };
 
+      psi-haproxy = {
+        host = "psi-haproxy";
+        hostname = "103.139.12.115";
+        user = "goline";
+      };
+
       goline-agent01 = {
         host = "goline-agent01";
         hostname = "10.10.3.200";
