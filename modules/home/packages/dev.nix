@@ -54,6 +54,8 @@
     lazydocker
     tmux
     glab                               # GitLab CLI
+    jk                                 # Jenkins CLI (github-style, replaces jenkins-cli.jar)
+    nexus3-cli                         # Nexus Repository Manager 3 CLI
 
     ## Oracle
     oracle-instantclient               # sqlplus CLI + instant client libs
