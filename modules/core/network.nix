@@ -4,6 +4,8 @@
   # then blocks waiting for network-online.target → NM-wait-online → NM (already stopped).
   systemd.services.NetworkManager-wait-online.enable = false;
 
+  boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 443;
+
   networking = {
     hostName = "${host}";
     networkmanager.enable = true;
@@ -14,6 +16,8 @@
       "10.10.1.26" = [ "vgaia-psi.goline.vn" "wiki.goline.vn" "sso.goline.vn" ];
       "10.10.1.27" = [ "vmarket-psi.goline.vn" ];
       "192.168.2.5" = [ "rustdesk.goline.vn" ];
+      # PSI UAT — tunnel: ssh -L 7000:localhost:7000 -L 9000:localhost:9000 -J goline@10.10.1.132,goline@103.139.12.115 vgaia@192.168.1.219
+      "127.0.0.1" = [ "vgapi-uat.psi.vn" "vgaia-uat.psi.vn" "vmarket-api-uat.psi.vn" ];
     };
     # nameservers = [
     #   "8.8.8.8"
