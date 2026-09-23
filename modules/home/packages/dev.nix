@@ -55,7 +55,9 @@
     tmux
     glab                               # GitLab CLI
     jk                                 # Jenkins CLI (github-style, replaces jenkins-cli.jar)
-    nexus3-cli                         # Nexus Repository Manager 3 CLI
+    nexus3-cli                         # Nexus Repository Manager 3 CLI (Python, scripting API — legacy)
+    nexus3-cli-go                      # Nexus 3 CLI Go — REST API only (liang-junwei)
+    nxtools                            # Nexus 3 CLI Go — REST API, env management (jfgratton)
 
     ## Oracle
     oracle-instantclient               # sqlplus CLI + instant client libs
