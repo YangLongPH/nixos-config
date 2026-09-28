@@ -2,7 +2,7 @@
 # Check RDP sessions trên các PSI hosts — liệt kê account trống
 
 PSI_SUBNET="192.168.1"
-PSI_HOST_OCTETS=(216 217 236 237)
+PSI_HOST_OCTETS=(216 217 236 237 238)
 SSH_USER="administrator"
 SSH_KEY="$HOME/.ssh/id_ed25519"
 JUMP="goline@10.10.1.132,goline@103.139.12.115"
