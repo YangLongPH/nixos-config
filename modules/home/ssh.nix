@@ -121,6 +121,13 @@
         user = "vgaia";
         proxyJump = "goline@10.10.1.132,goline@103.139.12.115";
       };
+
+      psi-prod-241 = {
+        host = "psi-prod-241";
+        hostname = "10.1.90.241";
+        user = "administrator";
+        proxyJump = "administrator@10.10.1.119";
+      };
     };
   };
 
