@@ -150,3 +150,34 @@ if [[ ${#available_hosts[@]} -gt 0 ]]; then
 else
   printf "${R}Tất cả host đều full.${RST}\n\n"
 fi
+
+# ── psi-214 (Linux) ───────────────────────────────────────────────────────────
+printf "%s\n" "────────────────────────────────────────────────────"
+printf "\n${B}[psi-214 — 192.168.1.214]${RST}\n"
+
+psi214_out=$(ssh -o ConnectTimeout=8 -o LogLevel=ERROR psi-214 \
+  "printf 'USERS\n'; w -h | grep xrdp-sesexec; printf 'IPS\n'; ss -tnp | grep ':3389'" 2>&1)
+psi214_rc=$?
+
+if [[ $psi214_rc -ne 0 ]]; then
+  printf "  ${R}OFFLINE${RST} — %s\n" "$(echo "$psi214_out" | head -1)"
+else
+  psi214_users=$(echo "$psi214_out" | sed -n '/^USERS$/,/^IPS$/{ /^USERS$/d; /^IPS$/d; p }')
+  psi214_ips=$(echo "$psi214_out" | sed -n '/^IPS$/,$ { /^IPS$/d; p }' \
+    | awk '{print $5}' | sed 's/\[::ffff://g; s/\]//g; s/:[0-9]*$//' | sort -u)
+
+  if [[ -z "$(echo "$psi214_users" | tr -d ' \n')" ]]; then
+    printf "  ${DIM}No RDP connections${RST}\n"
+  else
+    printf "  ${DIM}%-12s %s${RST}\n" "User" "Login"
+    printf "  ${DIM}%-12s %s${RST}\n" "────────────" "──────────"
+    while IFS= read -r line; do
+      [[ -z "$line" ]] && continue
+      uname=$(awk '{print $1}' <<< "$line")
+      logon=$(awk '{print $3}' <<< "$line")
+      printf "  ${G}%-12s${RST} %s\n" "$uname" "$logon"
+    done <<< "$psi214_users"
+    printf "\n  ${DIM}Connected from: ${RST}%s\n" "$(echo "$psi214_ips" | tr '\n' ' ')"
+  fi
+fi
+printf "\n"

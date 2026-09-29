@@ -84,7 +84,7 @@
         host = "psi-214";
         hostname = "192.168.1.214";
         user = "vgaia";
-        proxyJump = "goline@10.10.1.132,goline@103.139.12.115,vgaia@192.168.1.219";
+        proxyJump = "goline@10.10.1.132,goline@103.139.12.115";
       };
 
       psi-219 = {
