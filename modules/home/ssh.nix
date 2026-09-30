@@ -1,4 +1,13 @@
 { ... }:
+let
+  psiProdJump = "administrator@10.10.1.119,administrator@10.1.90.241";
+  mkPsiProdHost = hostname: ip: {
+    host = hostname;
+    hostname = ip;
+    user = "vgaia";
+    proxyJump = psiProdJump;
+  };
+in
 {
   programs.ssh = {
     enable = true;
@@ -88,7 +97,7 @@
       };
 
       psi-219 = {
-        host = "psi-219";
+        host = "psi-219 192.168.1.219";
         hostname = "192.168.1.219";
         user = "vgaia";
         proxyJump = "goline@10.10.1.132,goline@103.139.12.115";
@@ -128,6 +137,33 @@
         user = "administrator";
         proxyJump = "administrator@10.10.1.119";
       };
+
+      # PSI PROD — wildcard cho IP trực tiếp (ansible dùng ansible_host IP)
+      # Jump: 10.10.1.119 → 10.1.90.241 → target
+      "psi-prod-core" = {
+        host = "10.1.33.* 10.1.35.*";
+        user = "vgaia";
+        proxyJump = psiProdJump;
+      };
+
+      # PSI PROD — named entries cho SSH hostname
+      psi-prod-vcoremanager01 = mkPsiProdHost "psi-prod-vcoremanager01" "10.1.33.74";
+      psi-prod-vcoremanager02 = mkPsiProdHost "psi-prod-vcoremanager02" "10.1.33.75";
+      psi-prod-vcoremanager03 = mkPsiProdHost "psi-prod-vcoremanager03" "10.1.33.76";
+      psi-prod-vcoreback01    = mkPsiProdHost "psi-prod-vcoreback01"    "10.1.33.45";
+      psi-prod-vcoreapp01     = mkPsiProdHost "psi-prod-vcoreapp01"     "10.1.33.110";
+      psi-prod-vmarket01      = mkPsiProdHost "psi-prod-vmarket01"      "10.1.33.120";
+      psi-prod-vmarket02      = mkPsiProdHost "psi-prod-vmarket02"      "10.1.33.121";
+      psi-prod-vmiddleware01  = mkPsiProdHost "psi-prod-vmiddleware01"  "10.1.33.130";
+      psi-prod-vmiddleware02  = mkPsiProdHost "psi-prod-vmiddleware02"  "10.1.33.131";
+      psi-prod-vmiddleware03  = mkPsiProdHost "psi-prod-vmiddleware03"  "10.1.33.132";
+      psi-prod-vmktmid01      = mkPsiProdHost "psi-prod-vmktmid01"      "10.1.33.140";
+      psi-prod-vmktmid02      = mkPsiProdHost "psi-prod-vmktmid02"      "10.1.33.141";
+      psi-prod-vmktmid03      = mkPsiProdHost "psi-prod-vmktmid03"      "10.1.33.142";
+      psi-prod-vmonitor01     = mkPsiProdHost "psi-prod-vmonitor01"     "10.1.33.92";
+      psi-prod-vfileserver01  = mkPsiProdHost "psi-prod-vfileserver01"  "10.1.33.83";
+      psi-prod-vdockerhub01   = mkPsiProdHost "psi-prod-vdockerhub01"   "10.1.33.200";
+      psi-prod-vdbfo01        = mkPsiProdHost "psi-prod-vdbfo01"        "10.1.35.20";
     };
   };
 
