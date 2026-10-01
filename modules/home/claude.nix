@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, lib, ... }:
 let
   claude-pkg = inputs.claude-code.packages.${pkgs.system}.default;
   mcpServers = {
@@ -13,6 +13,15 @@ let
       ];
     };
   };
+  defaultSettings = builtins.toJSON {
+    permissions = {
+      defaultMode = "bypassPermissions";
+    };
+    theme = "dark";
+    skipDangerousModePermissionPrompt = true;
+    inherit mcpServers;
+  };
+  settingsFile = pkgs.writeText "claude-settings.json" defaultSettings;
 in
 {
   home.packages = [ claude-pkg ];
@@ -25,30 +34,16 @@ in
     claude-p = "CLAUDE_CONFIG_DIR=~/.claude-personal ${claude-pkg}/bin/claude";
   };
 
-  home.file.".claude-work/settings.json".text = builtins.toJSON {
-    permissions = {
-      defaultMode = "bypassPermissions";
-    };
-    theme = "dark";
-    skipDangerousModePermissionPrompt = true;
-    inherit mcpServers;
-  };
-
-  home.file.".claude-work2/settings.json".text = builtins.toJSON {
-    permissions = {
-      defaultMode = "bypassPermissions";
-    };
-    theme = "dark";
-    skipDangerousModePermissionPrompt = true;
-    inherit mcpServers;
-  };
-
-  home.file.".claude-personal/settings.json".text = builtins.toJSON {
-    permissions = {
-      defaultMode = "bypassPermissions";
-    };
-    theme = "dark";
-    skipDangerousModePermissionPrompt = true;
-    inherit mcpServers;
-  };
+  # Copy settings.json only if not already present — Claude Code needs to write to this file
+  # at runtime (plugins, MCP servers), so we cannot use home.file (which creates read-only symlinks).
+  home.activation.claudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    for dir in .claude-work .claude-work2 .claude-personal; do
+      target="$HOME/$dir/settings.json"
+      if [ ! -f "$target" ]; then
+        $DRY_RUN_CMD mkdir -p "$HOME/$dir"
+        $DRY_RUN_CMD cp ${settingsFile} "$target"
+        $DRY_RUN_CMD chmod 644 "$target"
+      fi
+    done
+  '';
 }
