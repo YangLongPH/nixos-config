@@ -164,6 +164,11 @@ in
       psi-prod-vfileserver01  = mkPsiProdHost "psi-prod-vfileserver01"  "10.1.33.83";
       psi-prod-vdockerhub01   = mkPsiProdHost "psi-prod-vdockerhub01"   "10.1.33.200";
       psi-prod-vdbfo01        = mkPsiProdHost "psi-prod-vdbfo01"        "10.1.35.20";
+
+      # PSI PROD — Oracle DB (user oracle, password auth)
+      psi-prod-pdb01 = (mkPsiProdHost "psi-prod-pdb01" "10.1.35.10") // {
+        user = "oracle";
+      };
     };
   };
 
