@@ -141,7 +141,7 @@ in
       # PSI PROD — wildcard cho IP trực tiếp (ansible dùng ansible_host IP)
       # Jump: 10.10.1.119 → 10.1.90.241 → target
       "psi-prod-core" = {
-        host = "10.1.33.* 10.1.35.*";
+        host = "10.1.33.* 10.1.35.* 10.1.48.* 10.1.64.*";
         user = "vgaia";
         proxyJump = psiProdJump;
       };
@@ -151,7 +151,9 @@ in
       psi-prod-vcoremanager02 = mkPsiProdHost "psi-prod-vcoremanager02" "10.1.33.75";
       psi-prod-vcoremanager03 = mkPsiProdHost "psi-prod-vcoremanager03" "10.1.33.76";
       psi-prod-vcoreback01    = mkPsiProdHost "psi-prod-vcoreback01"    "10.1.33.45";
+      psi-prod-vcoreback02    = mkPsiProdHost "psi-prod-vcoreback02"    "10.1.33.46";
       psi-prod-vcoreapp01     = mkPsiProdHost "psi-prod-vcoreapp01"     "10.1.33.110";
+      psi-prod-vcoreapp02     = mkPsiProdHost "psi-prod-vcoreapp02"     "10.1.33.111";
       psi-prod-vmarket01      = mkPsiProdHost "psi-prod-vmarket01"      "10.1.33.120";
       psi-prod-vmarket02      = mkPsiProdHost "psi-prod-vmarket02"      "10.1.33.121";
       psi-prod-vmiddleware01  = mkPsiProdHost "psi-prod-vmiddleware01"  "10.1.33.130";
@@ -164,6 +166,12 @@ in
       psi-prod-vfileserver01  = mkPsiProdHost "psi-prod-vfileserver01"  "10.1.33.83";
       psi-prod-vdockerhub01   = mkPsiProdHost "psi-prod-vdockerhub01"   "10.1.33.200";
       psi-prod-vdbfo01        = mkPsiProdHost "psi-prod-vdbfo01"        "10.1.35.20";
+      psi-prod-vwebapp01      = mkPsiProdHost "psi-prod-vwebapp01"      "10.1.48.18";
+      psi-prod-vwebapp02      = mkPsiProdHost "psi-prod-vwebapp02"      "10.1.48.19";
+      psi-prod-vmobiapp01     = mkPsiProdHost "psi-prod-vmobiapp01"     "10.1.48.26";
+      psi-prod-vmobiapp02     = mkPsiProdHost "psi-prod-vmobiapp02"     "10.1.48.27";
+      psi-prod-vbondgw01      = mkPsiProdHost "psi-prod-vbondgw01"      "10.1.64.18";
+      psi-prod-vbondgw02      = mkPsiProdHost "psi-prod-vbondgw02"      "10.1.64.19";
 
       # PSI PROD — Oracle DB (user oracle, password auth)
       psi-prod-pdb01 = (mkPsiProdHost "psi-prod-pdb01" "10.1.35.10") // {
