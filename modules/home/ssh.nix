@@ -169,6 +169,9 @@ in
       psi-prod-pdb01 = (mkPsiProdHost "psi-prod-pdb01" "10.1.35.10") // {
         user = "oracle";
       };
+      psi-prod-pdb02 = (mkPsiProdHost "psi-prod-pdb02" "10.1.35.11") // {
+        user = "oracle";
+      };
     };
   };
 
